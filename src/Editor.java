@@ -1,4 +1,7 @@
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDesktopPane;
@@ -20,8 +23,6 @@ public class Editor {
 		mLevelFrame.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		mLevelFrame.setVisible(true);
 		
-		//mMainFrame.add(mLevelFrame);
-		
 		mDesktop.add(mLevelFrame);
 		
 		mItemsFrame = new JInternalFrame("Items", false, false, false, false);
@@ -29,8 +30,22 @@ public class Editor {
 		mItemsFrame.setBounds(0, 0, 200, 480);
 		mItemsFrame.setVisible(true);
 		
-		//mMainFrame.add(mItemsFrame);
 		mDesktop.add(mItemsFrame);
+		
 	}
 
+	private void drawItems(){
+		
+		Rectangle rect = new Rectangle(0, 0, 10, 10);
+		mItemsFrame.paint(rect);
+		/*
+		 * WYBACZ, NIC NIE ZROBI£EM, BO NIE MOGÊ SIÊ SKUPIÆ,
+		 * ALE ZOBACZ TO:
+		 * http://zetcode.com/tutorials/java2dtutorial/basicdrawing/
+		 * WYGL¥DA CA£KIEM £ADNIE
+		 * 
+		 */
+	}
+	
+	
 }
