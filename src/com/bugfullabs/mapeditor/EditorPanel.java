@@ -33,6 +33,8 @@ public class EditorPanel extends JPanel{
 	
 		Rectangle rect = this.getBounds();
 		
+		g2d.setColor(Color.blue);
+		
 		for(int i = 0; i < (int)rect.getWidth(); i = i + OffX){
 			g2d.drawLine(i, 0, i, (int) rect.getHeight());
 		}

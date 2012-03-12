@@ -3,7 +3,6 @@ package com.bugfullabs.mapeditor;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 
 public class Editor {
 
