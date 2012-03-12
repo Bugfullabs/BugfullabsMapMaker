@@ -81,7 +81,15 @@ class TexturePackHandler extends DefaultHandler{
 		if (localName.equals("texture")) {
 			pack.setSize(Integer.parseInt(atts.getValue("width")), Integer.parseInt(atts.getValue("height")));
 			pack.setFile(new File(file.getPath()+atts.getValue("file")));
+		}else
+		if (localName.equals("textureregion")) {
+			pack.addTextureRegion(Integer.parseInt(atts.getValue("id")),
+								  Integer.parseInt(atts.getValue("x")),
+								  Integer.parseInt(atts.getValue("y")),
+								  Integer.parseInt(atts.getValue("width")),
+								  Integer.parseInt(atts.getValue("height")));
 		}
+		
 	}
 	
 	@Override
@@ -89,6 +97,9 @@ class TexturePackHandler extends DefaultHandler{
 			throws SAXException {
 		if (localName.equals("texture")) {
 			
+		}else
+			if (localName.equals("textureregion")) {
+				
 		}
 	}
 	
