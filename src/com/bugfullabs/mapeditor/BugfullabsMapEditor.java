@@ -1,3 +1,6 @@
+package com.bugfullabs.mapeditor;
+
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.JDesktopPane;
@@ -37,7 +40,6 @@ public class BugfullabsMapEditor {
 	    	  @Override
 	    	  public void onAction(ActionEvent e){
 	    		  if (e.getSource().equals(this.menuNewFile)) {
-	    			 // mFrame.setVisible(false);
 	    			  new Editor(mDesktop);
 	    		  }
 	    	  }
