@@ -30,10 +30,9 @@ public class BugfullabsMapEditor {
 	    	
 	      mFrame = new JFrame("Bugfullabs Map Maker");
 	      mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	      mFrame.setSize(1050, 570);
 	      
-	      mFrame.setSize(1000, 600);
-
-	      mFrame.setVisible(true);
+	      
 	      
 	      mDesktop = new JDesktopPane();
 	      mDesktop.setVisible(true);
@@ -74,9 +73,12 @@ public class BugfullabsMapEditor {
 	    	  public void onAction(ActionEvent e){
 	    		  if (e.getSource().equals(this.menuNewFile)) {
 	    			
-	    			  mFiles.showOpenDialog(null);
+	    			  int returnVal = mFiles.showOpenDialog(null);
 	    			  
-	    			  new Editor(mDesktop);
+	    	            if (returnVal == JFileChooser.APPROVE_OPTION) {
+	    	            
+	    			  new Editor(mDesktop, mFiles.getSelectedFile());
+	    	            }
 	    		  }else if(e.getSource().equals(this.menuSettings)){
 	    			  
 	    			  new Settings(mFrame);
@@ -85,8 +87,15 @@ public class BugfullabsMapEditor {
 	    	  }
 	      };
 
+	      mFrame.setVisible(true);
+	      
+	      
 	    }
 
+	    
+	    
+	    
+	    
 
 	    private static String getFileExtension(File f) {
 	        String ext = null;

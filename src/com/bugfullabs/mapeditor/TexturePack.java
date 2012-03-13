@@ -24,7 +24,10 @@ public class TexturePack{
 	}
 
 	public void addTextureRegion(int id, int x, int y, int width, int height){
+		
+		if(width < 100 && height < 100){
 		textures.add(id, mainImage.getSubimage(x, y, width, height));
+		}
 	}
 	
 	public BufferedImage getTextureRegion(int id){

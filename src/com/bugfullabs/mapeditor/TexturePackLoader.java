@@ -9,40 +9,37 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 
 public class TexturePackLoader{
 	
+	private static TexturePackHandler handler;
 	
 	
 	public static TexturePack createFromFile(File file){
 		
-		TexturePackHandler handler;
-
 		SAXParser sp; 
 		SAXParserFactory spf;
 		
 		if(file.exists()){
 		
-		handler = new TexturePackHandler(file);	
-		
 		try {
-			
+			handler = new TexturePackHandler(file);	
 			spf = SAXParserFactory.newInstance();
 			sp = spf.newSAXParser();
 			sp.parse(file, handler);
-			
+			TexturePack tx =  handler.getTexturePack();
+			return tx;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(-1);
 		}
 		
-		TexturePack tx =  handler.getTexturePack();
-		return tx;
 		}else{
-			System.exit(0);
+			
+		//TODO: IF FILE NOT EXISTS	
+		System.exit(0);
 			
 		}
 		
@@ -54,8 +51,9 @@ public class TexturePackLoader{
 
 class TexturePackHandler extends DefaultHandler{
 	
-	TexturePack pack;
-	File file;
+	private TexturePack pack;
+	private File file;
+	
 	
 	public TexturePackHandler(File pFile){
 		super();
@@ -64,7 +62,7 @@ class TexturePackHandler extends DefaultHandler{
 	
 	
 	public TexturePack getTexturePack() {
-		return this.pack;
+		return pack;
 	}
 	
 	@Override
@@ -77,22 +75,21 @@ class TexturePackHandler extends DefaultHandler{
 	public void endDocument() throws SAXException {
 	
 	}
+	
+	
 
-@Override
+	@Override
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
-		if (localName.equals("texture")) {
+		
+		if (qName.equals("texture")) {
 			
-			
-			try {
+			try {			
 				pack = new TexturePack(ImageIO.read(new File(file.getParent()+File.separator+atts.getValue("file"))), Integer.parseInt(atts.getValue("width")), Integer.parseInt(atts.getValue("height")));
 			} catch (IOException e) {
-				e.printStackTrace();
-				System.exit(-1);
-				
+				e.printStackTrace();			
 			}
 			
-		}else
-		if (localName.equals("textureregion")) {
+		}else if (qName.equals("textureregion")) {
 			pack.addTextureRegion(Integer.parseInt(atts.getValue("id")),
 								  Integer.parseInt(atts.getValue("x")),
 								  Integer.parseInt(atts.getValue("y")),
@@ -103,16 +100,18 @@ class TexturePackHandler extends DefaultHandler{
 	}
 	
 	@Override
-	public void endElement(String namespaceURI, String localName, String qName)
-			throws SAXException {
+	public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
 		if (localName.equals("texture")) {
 			
 		}
 	}
 	
+	
 	@Override
     public void characters(char ch[], int start, int length) {
 
-    	}	
+    }	
+	
+	
 	
 }

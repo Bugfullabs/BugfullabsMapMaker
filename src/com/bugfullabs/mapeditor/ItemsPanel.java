@@ -1,10 +1,7 @@
 package com.bugfullabs.mapeditor;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.File;
-
 import javax.swing.JPanel;
 
 
@@ -12,12 +9,15 @@ import javax.swing.JPanel;
 public class ItemsPanel extends JPanel{
 	
 	private Graphics2D g2d;
+	private TexturePack tx;
 	
-	ItemsPanel(String name, int x, int y, int width, int height){
+	ItemsPanel(String name, TexturePack texture, int x, int y, int width, int height){
 		super();
 		this.setName(name);
 		this.setBounds(x, y, width, height);
-		this.setBackground(Color.YELLOW);
+		this.setVisible(true);
+		
+		this.tx = texture;
 	}
 	
 	@Override
@@ -25,12 +25,22 @@ public class ItemsPanel extends JPanel{
 		
 		g2d = (Graphics2D) g;
 		
-		TexturePack tx = TexturePackLoader.createFromFile(new File("d:\\test.xml"));
-		
 		if(tx.getSize() > 0){
-		g2d.drawImage(tx.getTextureRegion(1), null, 10, 10);
+	
+		int j = 0;
+		int k = 0;
+			
+		for(int i = 0; i < tx.getSize(); i++){
+			
+		g2d.drawImage(tx.getTextureRegion(i), null, k*32, j*32);
+		k++;
+		if(k >= this.getWidth()/32){
+			k = 0;
+			j++;
+		}
 		
-		g2d.drawLine(0, 0, 200, 200);
+		}
+		
 		}
 	}
 	
