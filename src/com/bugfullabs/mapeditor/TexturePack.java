@@ -1,11 +1,7 @@
 package com.bugfullabs.mapeditor;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 
 
@@ -15,41 +11,29 @@ public class TexturePack{
 	
 	private BufferedImage mainImage;
 	
-	TexturePack(){
-		
-		textures = new ArrayList<BufferedImage>();
+	TexturePack(BufferedImage img, int width, int height){
+
+		this.mainImage = img;
+	
+		textures = new ArrayList<BufferedImage>(20);
 		
 	}
 
-	public void setTexture(BufferedImage img){
-	
-		this.mainImage = img;
-		
+	public TexturePack() {
+		textures = new ArrayList<BufferedImage>(1);
 	}
-	
+
 	public void addTextureRegion(int id, int x, int y, int width, int height){
 		textures.add(id, mainImage.getSubimage(x, y, width, height));
 	}
 	
 	public BufferedImage getTextureRegion(int id){
 		return this.textures.get(id);
-	}
-	
-	
-	public void setFile(File file){
+	}	
+
+	public int getSize(){
 		
-		try {
-			this.mainImage = ImageIO.read(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void setSize(int width, int height){
-		
+		return this.textures.size();
 	}
 
-	
-	
 }

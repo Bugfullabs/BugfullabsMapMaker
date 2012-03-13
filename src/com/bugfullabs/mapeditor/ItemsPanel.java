@@ -3,6 +3,8 @@ package com.bugfullabs.mapeditor;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.File;
+
 import javax.swing.JPanel;
 
 
@@ -23,8 +25,13 @@ public class ItemsPanel extends JPanel{
 		
 		g2d = (Graphics2D) g;
 		
-		g2d.drawLine(0, 0, 200, 200);
+		TexturePack tx = TexturePackLoader.createFromFile(new File("d:\\test.xml"));
 		
+		if(tx.getSize() > 0){
+		g2d.drawImage(tx.getTextureRegion(1), null, 10, 10);
+		
+		g2d.drawLine(0, 0, 200, 200);
+		}
 	}
 	
 }

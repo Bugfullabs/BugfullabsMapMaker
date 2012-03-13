@@ -76,9 +76,11 @@ public class BugfullabsMapEditor {
 	    			
 	    			  mFiles.showOpenDialog(null);
 	    			  
-	    			  
-	    			  
 	    			  new Editor(mDesktop);
+	    		  }else if(e.getSource().equals(this.menuSettings)){
+	    			  
+	    			  new Settings(mFrame);
+	    			  
 	    		  }
 	    	  }
 	      };

@@ -25,7 +25,7 @@ public class Menu implements ActionListener{
 	public JMenuItem menuNewFile;
 	public JMenuItem menuSave;
 	public JMenuItem menuAbout;
-	
+	public JMenuItem menuSettings;
 	
 	public Menu(JFrame pFrame){
 		
@@ -49,15 +49,28 @@ public class Menu implements ActionListener{
 	      menuSave.addActionListener(this);
 	      menu.add(menuSave);
 	      
+	      
+	      
+	      menu = new JMenu("Settings");
+	      menu.setMnemonic(KeyEvent.VK_S);
+	      menuBar.add(menu);	 
+	      
+	      menuSettings = new JMenuItem("Settings", KeyEvent.VK_T);
+	      menuSettings.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.ALT_MASK));
+	      menuSettings.addActionListener(this);
+	      menu.add(menuSettings);
+	      
+	      
 	      menu = new JMenu("Help");
 	      menu.setMnemonic(KeyEvent.VK_H);
-	      menu.getAccessibleContext().setAccessibleDescription("This menu does nothing");
 	      menuBar.add(menu);
 
 	      menuAbout = new JMenuItem("About...", KeyEvent.VK_A);
 	      menuAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
 	      menuAbout.addActionListener(this);
-	      menu.add(menuAbout);
+	      menu.add(menuAbout);     
+	      
+	      
 	      
 	      menuBar.setVisible(true);
 	      menu.setVisible(true);
