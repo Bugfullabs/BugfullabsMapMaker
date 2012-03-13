@@ -15,7 +15,6 @@ public class Editor {
 	
 	public Editor(JDesktopPane pDesktop, File file){
 		
-		
 		this.mDesktop = pDesktop;
 		
 		mEditorPanel = new EditorPanel("Editor", 210, 10, 800, 480);
