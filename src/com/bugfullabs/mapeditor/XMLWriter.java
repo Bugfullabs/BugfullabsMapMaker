@@ -28,44 +28,58 @@ public class XMLWriter{
 			
 			out.writeStartElement("level");
 
-			out.writeAttribute("id", "");
-			out.writeAttribute("rows", "");
-			out.writeAttribute("columns", "");
-			out.writeAttribute("levelpackid", "");
-			out.writeAttribute("texture", "");
+			out.writeAttribute("id", Integer.toString(level.getId()));
+			out.writeAttribute("rows", Integer.toString(level.getHeight()));
+			out.writeAttribute("columns", Integer.toString(level.getWidth()));
+			out.writeAttribute("levelpackid", "levelpack_" + Integer.toString(level.getLevelPack()));
+			out.writeAttribute("texture", level.getTexture());
 			
 				out.writeCharacters("\n");
 			
+				for(int i = 0; i <= level.getHeight();i++)
+				{
+					
 				out.writeStartElement("row");
-				out.writeAttribute("number", "");
+				out.writeAttribute("number", Integer.toString(i));
 				
 				out.writeCharacters("\n");
+				
+					for(int j = 0; j <+ level.getWidth(); j++){
 				
 					out.writeStartElement("item");
-					out.writeAttribute("column", "");
-					out.writeAttribute("id", "");
+					out.writeAttribute("column", Integer.toString(j));
+					out.writeAttribute("id", Integer.toString(level.getItem(j, i)));
 					out.writeEndElement();//</item>
 				
 					out.writeCharacters("\n");
 					
+					}
+					
 				out.writeEndElement();//</row>
-			
+				
 				out.writeCharacters("\n");
+				
+				}
+				
 				
 				out.writeStartElement("players");
-				out.writeAttribute("number", "");
+				out.writeAttribute("number", Integer.toString(level.getNumberOfPlayers()));
 				
 				out.writeCharacters("\n");
 				
+				for(int i = 0; i < level.getNumberOfPlayers(); i++){
+				
 					out.writeStartElement("player");
-					out.writeAttribute("color", "");
-					out.writeAttribute("column", "");
-					out.writeAttribute("row", "");
-					out.writeAttribute("id", "");
-					out.writeAttribute("dir", "");	
+					out.writeAttribute("color", Integer.toString(level.getPlayer(i).getColor()));
+					out.writeAttribute("column", Integer.toString(level.getPlayer(i).getColumn()));
+					out.writeAttribute("row", Integer.toString(level.getPlayer(i).getRow()));
+					out.writeAttribute("id", Integer.toString(i));
+					out.writeAttribute("dir", Integer.toString(level.getPlayer(i).getDir()));	
 					out.writeEndElement();
 				
 					out.writeCharacters("\n");
+					
+				}
 					
 			out.writeEndElement();//</level>
 			
