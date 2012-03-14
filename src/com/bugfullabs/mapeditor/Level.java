@@ -16,20 +16,46 @@ public class Level{
 	private ArrayList<PlayerEntity> players;
 	private int pattern[][];
 	
-	Level(int w, int h){
+	Level(int id, int pack, String tex, int w, int h){
 		
 		this.width = w;
 		this.height = h;
+		
+		this.id = id;
+		this.levelpack = pack;
+		this.texture = tex;
 		
 		this.players = new ArrayList<PlayerEntity>();
 		
 		this.pattern = new int[w][h];
 		
+		for(int i = 0; i < w; i++){
+			for(int j = 0; j < h; j++){
+			
+			this.pattern[i][j] = 0;
+				
+			}
+		}
+		
 	}
 	
 	
+	public void setItem(int item, int column, int row){
+		if(isCorrect(column, row)){
+			this.pattern[column][row] = item;
+		}
+	}
+	
+	public void setPlayer(PlayerEntity p){
+		this.players.add(p);
+	}
+	
+
 	public int getItem(int column, int row){
+		if(isCorrect(column, row)){
 		return pattern[column][row];
+		}
+		return 0;
 	}
 	
 	public int getWidth(){
@@ -60,6 +86,11 @@ public class Level{
 		return players.size();
 	}
 	
+	private boolean isCorrect(int column, int row) {
+		
+		return (column > 0 && column < this.width && row > 0 && row < this.height);
+	}
+	
 	
 }
 
@@ -70,6 +101,13 @@ class PlayerEntity{
 	private int row;
 	private int color;
 	private int dir;
+	
+	public PlayerEntity(int c, int r, int color, int d){
+		this.color = color;
+		this.dir = d;
+		this.column = c;
+		this.row = r;
+	}
 	
 	public int getDir(){
 		return dir;

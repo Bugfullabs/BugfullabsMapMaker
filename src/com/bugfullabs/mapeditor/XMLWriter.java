@@ -31,7 +31,7 @@ public class XMLWriter{
 			out.writeAttribute("id", Integer.toString(level.getId()));
 			out.writeAttribute("rows", Integer.toString(level.getHeight()));
 			out.writeAttribute("columns", Integer.toString(level.getWidth()));
-			out.writeAttribute("levelpackid", "levelpack_" + Integer.toString(level.getLevelPack()));
+			out.writeAttribute("levelpackid", Integer.toString(level.getLevelPack()));
 			out.writeAttribute("texture", level.getTexture());
 			
 				out.writeCharacters("\n");
@@ -44,7 +44,7 @@ public class XMLWriter{
 				
 				out.writeCharacters("\n");
 				
-					for(int j = 0; j <+ level.getWidth(); j++){
+					for(int j = 0; j <= level.getWidth(); j++){
 				
 					out.writeStartElement("item");
 					out.writeAttribute("column", Integer.toString(j));
