@@ -44,6 +44,8 @@ public class Level{
 		if(isCorrect(column, row)){
 			this.pattern[column][row] = item;
 		}
+		else
+			System.out.println("Niepoprawne koordynaty");
 	}
 	
 	public void setPlayer(PlayerEntity p){
@@ -55,6 +57,8 @@ public class Level{
 		if(isCorrect(column, row)){
 		return pattern[column][row];
 		}
+		else
+			System.out.println("Niepoprawne koordynaty");
 		return 0;
 	}
 	
@@ -88,7 +92,7 @@ public class Level{
 	
 	private boolean isCorrect(int column, int row) {
 		
-		return (column > 0 && column < this.width && row > 0 && row < this.height);
+		return (column >= 0 && column < this.width && row >= 0 && row < this.height);
 	}
 	
 	

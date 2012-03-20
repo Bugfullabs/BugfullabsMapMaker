@@ -11,19 +11,21 @@ public class Editor {
 	private JDesktopPane mDesktop;
 	private ItemsPanel mItemsPanel;
 	private EditorPanel mEditorPanel;
+	
+	public static int selected_item_id;
 
 	
 	public Editor(JDesktopPane pDesktop, File file){
 		
 		this.mDesktop = pDesktop;
 		
-		mEditorPanel = new EditorPanel("Editor", 210, 10, 800, 480);
+		TexturePack tx = TexturePackLoader.createFromFile(file);
+		
+		mEditorPanel = new EditorPanel("Editor", tx, 210, 10, 800, 480);
 		mEditorPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		mEditorPanel.setVisible(true);
 		
 		mDesktop.add(mEditorPanel);
-		
-		TexturePack tx = TexturePackLoader.createFromFile(file);
 		
 		mItemsPanel = new ItemsPanel("Items", tx, 10, 10, 200, 480);
 		mItemsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -34,7 +36,12 @@ public class Editor {
 		mDesktop.repaint();
 	}
 
+	public void setSelectedItemId(int id) {
+		selected_item_id = id;
+	}
+	
+	public int getSelectedItemId() {
+		return selected_item_id;
+	}
 
-	
-	
 }
