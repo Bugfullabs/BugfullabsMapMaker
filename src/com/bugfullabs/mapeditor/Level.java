@@ -95,7 +95,6 @@ public class Level{
 		return (column >= 0 && column < this.width && row >= 0 && row < this.height);
 	}
 	
-	
 }
 
 
@@ -115,14 +114,26 @@ class PlayerEntity{
 	
 	public int getDir(){
 		return dir;
+	}	
+	
+	public void setDir(int d){
+		this.dir = d;
 	}
 	
 	public int getRow(){
 		return row;
 	}
+
+	public void setRow(int r){
+		this.row = r;
+	}
 	
 	public int getColumn(){
 		return column;
+	}
+	
+	public void setColumn(int c){
+		this.column = c;
 	}
 	
 	public int getColor(){

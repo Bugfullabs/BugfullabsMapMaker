@@ -83,6 +83,10 @@ public class BugfullabsMapEditor {
 	    			  
 	    			  new Settings(mFrame);
 	    			  
+	    		  }else if(e.getSource().equals(this.menuSave)){
+	    			  
+	    			  XMLWriter.writeXML(new File("C:/Users/dlt/git/TheGame/TheGame/assets/levels/level_1_7.xml"), Editor.mEditorPanel.level);
+	    			  
 	    		  }
 	    	  }
 	      };
