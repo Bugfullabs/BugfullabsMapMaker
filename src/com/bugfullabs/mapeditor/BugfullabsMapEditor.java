@@ -24,9 +24,11 @@ public class BugfullabsMapEditor {
 	   
 	   static Menu mMenu;
 	   
-	   static JFileChooser mFiles;
+	   static JFileChooser mOpen;
 	   
-	    public static void main(String[] args) {
+	   public static Editor mEditor;
+	   
+	   public static void main(String[] args) {
 	    	
 	      mFrame = new JFrame("Bugfullabs Map Maker");
 	      mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,11 +40,11 @@ public class BugfullabsMapEditor {
 	      mDesktop.setVisible(true);
 	      mFrame.add(mDesktop);
 	      
-	      mFiles = new JFileChooser();
+	      mOpen = new JFileChooser();
 	      
 	      
 	      
-		  mFiles.setFileFilter(new FileFilter(){
+		  mOpen.setFileFilter(new FileFilter(){
 
 			@Override
 		    	  public boolean accept(File f){
@@ -73,11 +75,10 @@ public class BugfullabsMapEditor {
 	    	  public void onAction(ActionEvent e){
 	    		  if (e.getSource().equals(this.menuNewFile)) {
 	    			
-	    			  int returnVal = mFiles.showOpenDialog(null);
+	    			  int returnVal = mOpen.showOpenDialog(null);
 	    			  
 	    	            if (returnVal == JFileChooser.APPROVE_OPTION) {
-	    	            
-	    			  new Editor(mDesktop, mFiles.getSelectedFile());
+	    	            	mEditor = new Editor(mDesktop, mOpen.getSelectedFile());
 	    	            }
 	    		  }else if(e.getSource().equals(this.menuSettings)){
 	    			  
@@ -85,8 +86,8 @@ public class BugfullabsMapEditor {
 	    			  
 	    		  }else if(e.getSource().equals(this.menuSave)){
 	    			  
-	    			  XMLWriter.writeXML(new File("C:/Users/dlt/git/TheGame/TheGame/assets/levels/level_1_7.xml"), Editor.mEditorPanel.level);
-	    			  
+	    			  new SaveMenu(mFrame);
+
 	    		  }
 	    	  }
 	      };

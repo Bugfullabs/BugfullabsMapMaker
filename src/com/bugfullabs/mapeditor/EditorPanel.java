@@ -149,7 +149,7 @@ public class EditorPanel extends JPanel implements MouseListener {
 				EditorPanel.setPlayerDir(EditorPanel.getPlayerDir() + 1);
 			else
 				EditorPanel.setPlayerDir(0);
-			Editor.mEditorPanel.repaintIt();
+			BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
 		}
 		
 		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id);

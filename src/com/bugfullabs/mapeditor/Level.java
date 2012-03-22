@@ -74,6 +74,10 @@ public class Level{
 		return id;
 	}
 	
+	public void setId(int i){
+		id = i;
+	}
+	
 	public int getLevelPack(){
 		return levelpack;
 	}

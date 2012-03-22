@@ -10,7 +10,7 @@ public class Editor {
 
 	private JDesktopPane mDesktop;
 	private ItemsPanel mItemsPanel;
-	public static EditorPanel mEditorPanel;
+	public EditorPanel mEditorPanel;
 	
 	public static int selected_item_id;
 
