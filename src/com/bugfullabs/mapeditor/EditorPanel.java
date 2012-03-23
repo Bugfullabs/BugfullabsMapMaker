@@ -47,7 +47,7 @@ public class EditorPanel extends JPanel implements MouseListener {
 
 		drawGrid(32, 32);
 		
-		if (player.getRow() > 0 && player.getColumn() > 0)
+		if (player.getRow() >= 0 && player.getColumn() >= 0)
 			g2d.drawImage(tx.getTextureRegion(0), null, player.getColumn()*32, player.getRow()*32);
 
 		if (drawing)

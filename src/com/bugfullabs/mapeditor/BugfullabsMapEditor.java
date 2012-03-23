@@ -41,6 +41,7 @@ public class BugfullabsMapEditor {
 	      mFrame.add(mDesktop);
 	      
 	      mOpen = new JFileChooser();
+	      mOpen.setCurrentDirectory(new File("C:/Users/dlt/git/TheGame/TheGame/assets/gfx/game"));
 	      
 	      
 	      
