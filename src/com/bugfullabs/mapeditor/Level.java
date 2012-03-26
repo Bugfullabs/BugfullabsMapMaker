@@ -82,6 +82,10 @@ public class Level{
 		return levelpack;
 	}
 	
+	public void setLevelPack(int lp){
+		levelpack = lp;
+	}
+	
 	public String getTexture(){
 		return texture;
 	}
@@ -89,7 +93,7 @@ public class Level{
 	public PlayerEntity getPlayer(int id){
 		return players.get(id);
 	}
-	
+
 	public int getNumberOfPlayers(){
 		return players.size();
 	}

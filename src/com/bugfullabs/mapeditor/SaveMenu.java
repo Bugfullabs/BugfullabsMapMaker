@@ -19,7 +19,7 @@ import javax.swing.SpinnerNumberModel;
 
 public class SaveMenu implements ActionListener {
 	
-	private JFrame saveMenu;
+	public JFrame saveMenu;
 	private JButton saveButton;
 	private JSpinner spinLevelId;
 	private JSpinner spinLevelPackId;
@@ -27,9 +27,11 @@ public class SaveMenu implements ActionListener {
 	private JPanel mSpinnerLIPanel;
 	private JPanel mButtonPanel;
 	private JFileChooser mSave;
+	private boolean clear = false;
 	
-	
-	SaveMenu(JFrame frame){
+	SaveMenu(JFrame frame, boolean clear){
+		
+		this.clear = clear;
 		
 		saveMenu = new JFrame();
 		mSpinnerLPIPanel = new JPanel();
@@ -73,10 +75,13 @@ public class SaveMenu implements ActionListener {
 			int returnVal = mSave.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				BugfullabsMapEditor.mEditor.mEditorPanel.level.setId((Integer)spinLevelId.getValue());
+				BugfullabsMapEditor.mEditor.mEditorPanel.level.setLevelPack((Integer)spinLevelPackId.getValue());
 				System.out.println("saved to: " + mSave.getSelectedFile().toString() + "/level_" + BugfullabsMapEditor.mEditor.mEditorPanel.level.getLevelPack() + "_" + BugfullabsMapEditor.mEditor.mEditorPanel.level.getId() + ".xml");
 				XMLWriter.writeXML(new File(mSave.getSelectedFile().toString() + "/level_" + BugfullabsMapEditor.mEditor.mEditorPanel.level.getLevelPack() + "_" + BugfullabsMapEditor.mEditor.mEditorPanel.level.getId() + ".xml"), BugfullabsMapEditor.mEditor.mEditorPanel.level);
 				saveMenu.setVisible(false);
 		    	saveButton.setEnabled(true);
+		    	if (clear)
+		    		BugfullabsMapEditor.openBrandNewEditor();
 			}
 	    }
 	} 

@@ -23,6 +23,7 @@ public class Menu implements ActionListener{
 	JMenu menu;
 
 	public JMenuItem menuNewFile;
+	public JMenuItem menuOpen;
 	public JMenuItem menuSave;
 	public JMenuItem menuAbout;
 	public JMenuItem menuSettings;
@@ -38,14 +39,20 @@ public class Menu implements ActionListener{
 	      menu = new JMenu("File");
 	      menu.setMnemonic(KeyEvent.VK_F);
 	      menuBar.add(menu);
-	      
+
 	      menuNewFile = new JMenuItem("New File...", KeyEvent.VK_N);
-	      menuNewFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
+	      menuNewFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 	      menuNewFile.addActionListener(this);
 	      menu.add(menuNewFile);
 	      
+	      menuOpen = new JMenuItem("Open... (soon)", KeyEvent.VK_O);
+	      menuOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+	      menuOpen.addActionListener(this);
+	      menu.add(menuOpen);
+	      menuOpen.setEnabled(false);
+	      
 	      menuSave = new JMenuItem("Save...", KeyEvent.VK_S);
-	      menuSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
+	      menuSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 	      menuSave.addActionListener(this);
 	      menu.add(menuSave);
 	      
@@ -56,7 +63,7 @@ public class Menu implements ActionListener{
 	      menuBar.add(menu);	 
 	      
 	      menuSettings = new JMenuItem("Settings", KeyEvent.VK_T);
-	      menuSettings.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.ALT_MASK));
+	      menuSettings.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
 	      menuSettings.addActionListener(this);
 	      menu.add(menuSettings);
 	      
@@ -66,7 +73,7 @@ public class Menu implements ActionListener{
 	      menuBar.add(menu);
 
 	      menuAbout = new JMenuItem("About...", KeyEvent.VK_A);
-	      menuAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
+	      menuAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
 	      menuAbout.addActionListener(this);
 	      menu.add(menuAbout);     
 	      

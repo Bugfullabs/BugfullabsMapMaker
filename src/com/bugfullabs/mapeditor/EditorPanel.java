@@ -140,6 +140,10 @@ public class EditorPanel extends JPanel implements MouseListener {
 		
 		drawing = true;
 
+		if (level == null) {
+			System.out.println("LEVEL NULL!");
+		}
+
 		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected()) {
 			player.setColumn(e.getX()/32);
 			player.setRow(e.getY()/32);
@@ -162,6 +166,11 @@ public class EditorPanel extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		drawing = false;
 		
+	}
+
+	public void setLevel(Level l) {
+		this.level = l;
+		System.out.println("Level created");
 	}
 	
 }

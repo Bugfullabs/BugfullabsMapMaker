@@ -7,6 +7,7 @@ import java.io.File;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 
@@ -23,7 +24,9 @@ public class BugfullabsMapEditor {
 	   static JDesktopPane mDesktop;
 	   
 	   static Menu mMenu;
-	   
+
+	   static JFileChooser mSelectLeveLPack;
+
 	   static JFileChooser mOpen;
 	   
 	   public static Editor mEditor;
@@ -34,18 +37,14 @@ public class BugfullabsMapEditor {
 	      mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	      mFrame.setSize(1050, 570);
 	      
-	      
-	      
 	      mDesktop = new JDesktopPane();
 	      mDesktop.setVisible(true);
 	      mFrame.add(mDesktop);
 	      
-	      mOpen = new JFileChooser();
-	      mOpen.setCurrentDirectory(new File("C:/Users/dlt/git/TheGame/TheGame/assets/gfx/game"));
+	      mSelectLeveLPack = new JFileChooser();
+	      mSelectLeveLPack.setCurrentDirectory(new File("C:/Users/dlt/git/TheGame/TheGame/assets/gfx/game"));
 	      
-	      
-	      
-		  mOpen.setFileFilter(new FileFilter(){
+		  mSelectLeveLPack.setFileFilter(new FileFilter(){
 
 			@Override
 		    	  public boolean accept(File f){
@@ -70,37 +69,95 @@ public class BugfullabsMapEditor {
 				return null;
 			}});
 		  
+		  mOpen = new JFileChooser();
+	      mOpen.setCurrentDirectory(new File("C:/Users/dlt/git/TheGame/TheGame/assets/levels"));
 	      
 	      mMenu = new Menu(mFrame){
 	    	  @Override
 	    	  public void onAction(ActionEvent e){
 	    		  if (e.getSource().equals(this.menuNewFile)) {
-	    			
-	    			  int returnVal = mOpen.showOpenDialog(null);
 	    			  
-	    	            if (returnVal == JFileChooser.APPROVE_OPTION) {
-	    	            	mEditor = new Editor(mDesktop, mOpen.getSelectedFile());
-	    	            }
-	    		  }else if(e.getSource().equals(this.menuSettings)){
+	    			  if (mEditor == null) {
+		    			  int returnVal = mSelectLeveLPack.showOpenDialog(null);
+		    			  if (returnVal == JFileChooser.APPROVE_OPTION) {
+		    				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
+		    				  System.out.println("First Editor");
+		    	          }
+	    			  }
+	    			  else if (mEditor != null) {
+	    				  
+	    				  
+	    				  int a = JOptionPane.showConfirmDialog(null,
+	    						  "Do you want to save level, before creating new one?\n"
+	  						    + "All unsaved changes will be lost.\n",
+	  						    "Do you want to save level?",
+	  						    JOptionPane.YES_NO_CANCEL_OPTION);
+	    				  if (a == 0) {
+	    					  new SaveMenu(mFrame, true);
+	    				  }
+	    				  else if (a == 1) {
+	    					  openBrandNewEditor();
+	    				  }
+	    			  }
+	    			  
+	    		  }
+	    		  else if (e.getSource().equals(this.menuOpen)) {
+		    			  
+		   			  if (mEditor == null) {
+		    			  int returnValOpen = mOpen.showOpenDialog(null);
+		    			  int returnValLP = mSelectLeveLPack.showOpenDialog(null);
+		    			  if (returnValOpen == JFileChooser.APPROVE_OPTION && returnValLP == JFileChooser.APPROVE_OPTION) {
+		    				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
+		    				  LevelFileReader mLevelFileReader = new LevelFileReader(mOpen.getSelectedFile());
+		    				  mEditor.mEditorPanel.setLevel(mLevelFileReader.getLevel());
+		    				  System.out.println("First Editor, Open");
+		    	          }
+		   			  }
+		    		  else if (mEditor != null) {
+		    				  
+		    				  
+		    				  int a = JOptionPane.showConfirmDialog(null,
+		    						  "Do you want to save level, before creating new one?\n"
+		  						    + "All unsaved changes will be lost.\n",
+		  						    "Do you want to save level?",
+		  						    JOptionPane.YES_NO_CANCEL_OPTION);
+		    				  if (a == 0) {
+		    					  new SaveMenu(mFrame, true);
+		    				  }
+		    				  else if (a == 1) {
+		    					  openBrandNewEditor();
+		    				  }
+		    			  }
+		    			  
+	    		  }
+	    		  else if(e.getSource().equals(this.menuSettings)){
 	    			  
 	    			  new Settings(mFrame);
 	    			  
-	    		  }else if(e.getSource().equals(this.menuSave)){
+	    		  }
+	    		  else if(e.getSource().equals(this.menuSave)){
 	    			  
-	    			  new SaveMenu(mFrame);
+	    			  new SaveMenu(mFrame, false);
 
 	    		  }
 	    	  }
 	      };
 
 	      mFrame.setVisible(true);
-	      
-	      
+
+
 	    }
 
 	    
-	    
-	    
+	    public static void openBrandNewEditor() {
+	    	int returnVal = mSelectLeveLPack.showOpenDialog(null);
+			  if (returnVal == JFileChooser.APPROVE_OPTION) {
+				  mEditor.clear();
+				  mEditor = null;
+				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
+				  System.out.println("openBrandNewEditor();");
+			  }
+	    }
 	    
 
 	    private static String getFileExtension(File f) {

@@ -44,4 +44,13 @@ public class Editor {
 		return selected_item_id;
 	}
 
+	public void clear() {
+		mDesktop.removeAll();
+		mItemsPanel.removeAll();
+		mEditorPanel.removeAll();
+		selected_item_id = 0;
+
+		System.out.println("mEditor.clear();");
+	}
+
 }
