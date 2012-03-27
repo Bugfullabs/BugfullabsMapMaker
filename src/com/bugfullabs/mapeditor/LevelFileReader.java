@@ -45,6 +45,7 @@ public class LevelFileReader{
 
 		handler = new LevelHandler();
 		
+		System.out.println(mFile);
 		sp.parse(mFile, handler);
 		
 		

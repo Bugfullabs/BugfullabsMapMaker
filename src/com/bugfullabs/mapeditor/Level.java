@@ -14,7 +14,7 @@ public class Level{
 	
 	
 	private ArrayList<PlayerEntity> players;
-	private int pattern[][];
+	public int pattern[][];
 	
 	Level(int id, int pack, String tex, int w, int h){
 		
@@ -122,6 +122,10 @@ class PlayerEntity{
 	
 	public int getDir(){
 		return dir;
+	}	
+	
+	public void setColor(int c){
+		this.color = c;
 	}	
 	
 	public void setDir(int d){

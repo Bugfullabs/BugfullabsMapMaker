@@ -18,7 +18,7 @@ public class EditorPanel extends JPanel implements MouseListener {
 	private boolean drawing = false;
 	private TexturePack tx;
 	private static int item_id;
-	private static PlayerEntity player;
+	public PlayerEntity player;
 	
 	public Level level;
 	
@@ -57,23 +57,29 @@ public class EditorPanel extends JPanel implements MouseListener {
 				int k = 0;
 				
 				for(int i = 0; i < level.getWidth(); i++){
-	
-					if(level.getItem(k, j) != 0 && level.getItem(k, j) != 2) {
+
+//					System.out.print("(" + k + "," + j + ") ");
+					
+					if (level.getItem(k, j) != 0 && level.getItem(k, j) != 2) {
 						g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), null, k*32, j*32);
 					}
-					else if(level.getItem(k, j) == 2) {
+					else if (level.getItem(k, j) == 2) {
 						AffineTransform xform = new AffineTransform();
 						xform.translate(k*32, j*32);
 						xform.rotate(player.getDir()*(Math.PI/2), tx.getTextureRegion(level.getItem(k, j)).getWidth()/2, tx.getTextureRegion(level.getItem(k, j)).getHeight()/2);
 						g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), xform, null);
-						System.out.println("finish placed, rotation: " + (player.getDir()*(Math.PI/2)));
+						System.out.println("finish placed, rotation: " + (player.getDir()));
 					}
 					
 					k++;
 			
-					if(k >= this.getWidth()/32){
+					if (k >= this.getWidth()/32) {
 						k = 0;
 						j++;
+					}
+					if (j >= this.getHeight()/32) {
+						j = 0;
+						k = 0;
 					}
 			
 				}
@@ -109,11 +115,11 @@ public class EditorPanel extends JPanel implements MouseListener {
 		repaint();
 	}
 
-	public static void setPlayerDir(int dir) {
+	public void setPlayerDir(int dir) {
 		player.setDir(dir);
 	}
 
-	public static int getPlayerDir() {
+	public int getPlayerDir() {
 		return player.getDir();
 	}
 
@@ -149,10 +155,10 @@ public class EditorPanel extends JPanel implements MouseListener {
 			player.setRow(e.getY()/32);
 		}
 		else if (level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) {
-			if (EditorPanel.getPlayerDir() < 3)
-				EditorPanel.setPlayerDir(EditorPanel.getPlayerDir() + 1);
+			if (getPlayerDir() < 3)
+				setPlayerDir(getPlayerDir() + 1);
 			else
-				EditorPanel.setPlayerDir(0);
+				setPlayerDir(0);
 			BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
 		}
 		
@@ -170,7 +176,12 @@ public class EditorPanel extends JPanel implements MouseListener {
 
 	public void setLevel(Level l) {
 		this.level = l;
-		System.out.println("Level created");
+		System.out.println("Level id: " + this.level.getId() + ", LevelPackId: " + this.level.getLevelPack());
+		
+		if (l != null)
+			System.out.println("Level input");
+		else
+			System.out.println("NULL Level input");
 	}
 	
 }

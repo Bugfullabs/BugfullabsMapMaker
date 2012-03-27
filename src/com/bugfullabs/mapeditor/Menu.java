@@ -45,11 +45,11 @@ public class Menu implements ActionListener{
 	      menuNewFile.addActionListener(this);
 	      menu.add(menuNewFile);
 	      
-	      menuOpen = new JMenuItem("Open... (soon)", KeyEvent.VK_O);
+	      menuOpen = new JMenuItem("Open...", KeyEvent.VK_O);
 	      menuOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 	      menuOpen.addActionListener(this);
 	      menu.add(menuOpen);
-	      menuOpen.setEnabled(false);
+	      //menuOpen.setEnabled(false);
 	      
 	      menuSave = new JMenuItem("Save...", KeyEvent.VK_S);
 	      menuSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
@@ -60,7 +60,7 @@ public class Menu implements ActionListener{
 	      
 	      menu = new JMenu("Settings");
 	      menu.setMnemonic(KeyEvent.VK_S);
-	      menuBar.add(menu);	 
+	      menuBar.add(menu);
 	      
 	      menuSettings = new JMenuItem("Settings", KeyEvent.VK_T);
 	      menuSettings.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));

@@ -31,6 +31,8 @@ public class BugfullabsMapEditor {
 	   
 	   public static Editor mEditor;
 	   
+	   static LevelFileReader mLevelFileReader;
+	   
 	   public static void main(String[] args) {
 	    	
 	      mFrame = new JFrame("Bugfullabs Map Maker");
@@ -108,9 +110,11 @@ public class BugfullabsMapEditor {
 		    			  int returnValLP = mSelectLeveLPack.showOpenDialog(null);
 		    			  if (returnValOpen == JFileChooser.APPROVE_OPTION && returnValLP == JFileChooser.APPROVE_OPTION) {
 		    				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
-		    				  LevelFileReader mLevelFileReader = new LevelFileReader(mOpen.getSelectedFile());
+		    				  mLevelFileReader = new LevelFileReader(mOpen.getSelectedFile());
 		    				  mEditor.mEditorPanel.setLevel(mLevelFileReader.getLevel());
+		    				  System.out.println("Level id: " + mEditor.mEditorPanel.level.getId() + ", LevelPackId: " + mEditor.mEditorPanel.level.getLevelPack());
 		    				  System.out.println("First Editor, Open");
+		    				  mEditor.mEditorPanel.repaintIt();
 		    	          }
 		   			  }
 		    		  else if (mEditor != null) {
@@ -125,7 +129,17 @@ public class BugfullabsMapEditor {
 		    					  new SaveMenu(mFrame, true);
 		    				  }
 		    				  else if (a == 1) {
-		    					  openBrandNewEditor();
+		    					  clear();
+		    					  int returnValOpen = mOpen.showOpenDialog(null);
+				    			  int returnValLP = mSelectLeveLPack.showOpenDialog(null);
+				    			  if (returnValOpen == JFileChooser.APPROVE_OPTION && returnValLP == JFileChooser.APPROVE_OPTION) {
+				    				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
+				    				  mLevelFileReader = new LevelFileReader(mOpen.getSelectedFile());
+				    				  mEditor.mEditorPanel.setLevel(mLevelFileReader.getLevel());
+				    				  System.out.println("Level id: " + mEditor.mEditorPanel.level.getId() + ", LevelPackId: " + mEditor.mEditorPanel.level.getLevelPack());
+				    				  System.out.println("First Editor, Open");
+				    				  mEditor.mEditorPanel.repaintIt();
+				    	          }
 		    				  }
 		    			  }
 		    			  
@@ -152,13 +166,16 @@ public class BugfullabsMapEditor {
 	    public static void openBrandNewEditor() {
 	    	int returnVal = mSelectLeveLPack.showOpenDialog(null);
 			  if (returnVal == JFileChooser.APPROVE_OPTION) {
-				  mEditor.clear();
-				  mEditor = null;
+				  clear();
 				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
 				  System.out.println("openBrandNewEditor();");
 			  }
 	    }
 	    
+	    public static void clear() {
+	    	mEditor.clear();
+			mEditor = null;
+	    }
 
 	    private static String getFileExtension(File f) {
 	        String ext = null;
