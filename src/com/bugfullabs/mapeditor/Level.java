@@ -122,7 +122,7 @@ class PlayerEntity{
 	
 	public int getDir(){
 		return dir;
-	}	
+	}
 	
 	public void setColor(int c){
 		this.color = c;

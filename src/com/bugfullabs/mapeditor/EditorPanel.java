@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 public class EditorPanel extends JPanel implements MouseListener {
 	
 	private Graphics2D g2d;
-	private boolean drawing = false;
 	private TexturePack tx;
 	private static int item_id;
 	public PlayerEntity player;
@@ -50,43 +49,41 @@ public class EditorPanel extends JPanel implements MouseListener {
 		if (player.getRow() >= 0 && player.getColumn() >= 0)
 			g2d.drawImage(tx.getTextureRegion(0), null, player.getColumn()*32, player.getRow()*32);
 
-		if (drawing)
-			if(level.getWidth() > 0){
-				
-				int j = 0;
-				int k = 0;
-				
-				for(int i = 0; i < level.getWidth(); i++){
+		if (level.getWidth() > 0) {
+			
+			int j = 0;
+			int k = 0;
 
-//					System.out.print("(" + k + "," + j + ") ");
-					
-					if (level.getItem(k, j) != 0 && level.getItem(k, j) != 2) {
-						g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), null, k*32, j*32);
-					}
-					else if (level.getItem(k, j) == 2) {
-						AffineTransform xform = new AffineTransform();
-						xform.translate(k*32, j*32);
-						xform.rotate(player.getDir()*(Math.PI/2), tx.getTextureRegion(level.getItem(k, j)).getWidth()/2, tx.getTextureRegion(level.getItem(k, j)).getHeight()/2);
-						g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), xform, null);
-						System.out.println("finish placed, rotation: " + (player.getDir()));
-					}
-					
-					k++;
-			
-					if (k >= this.getWidth()/32) {
-						k = 0;
-						j++;
-					}
-					if (j >= this.getHeight()/32) {
-						j = 0;
-						k = 0;
-					}
-			
+			for(int i = 0; i < level.getWidth()/32 * level.getHeight()/32; i++) {
+
+//				System.out.print("(" + k + "," + j + ") ");
+
+				if (level.getItem(k, j) != 0 && level.getItem(k, j) != 2) {
+					g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), null, k*32, j*32);
 				}
-	
-			}
-
+				else if (level.getItem(k, j) == 2) {
+					AffineTransform xform = new AffineTransform();
+					xform.translate(k*32, j*32);
+					xform.rotate(player.getDir()*(Math.PI/2), tx.getTextureRegion(level.getItem(k, j)).getWidth()/2, tx.getTextureRegion(level.getItem(k, j)).getHeight()/2);
+					g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), xform, null);
+					System.out.println("finish placed, rotation: " + (player.getDir()));
+				}
+				
+				k++;
 		
+				if (k >= this.getWidth()/32) {
+					k = 0;
+					j++;
+				}
+
+				if (j >= this.getHeight()/32) {
+					break;
+				}
+		
+			}
+	
+		}
+	
 	}
 
 	
@@ -143,8 +140,6 @@ public class EditorPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
-		drawing = true;
 
 		if (level == null) {
 			System.out.println("LEVEL NULL!");
@@ -170,8 +165,7 @@ public class EditorPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		drawing = false;
-		
+
 	}
 
 	public void setLevel(Level l) {
