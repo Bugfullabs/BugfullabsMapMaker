@@ -6,17 +6,18 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
 
 @SuppressWarnings("serial")
-public class EditorPanel extends JPanel implements MouseListener {
+public class EditorPanel extends JPanel implements MouseListener, MouseMotionListener {
 	
 	private Graphics2D g2d;
 	private TexturePack tx;
-	private static int item_id;
+	private static int item_id = 1;
 	public PlayerEntity player;
 	
 	public Level level;
@@ -29,6 +30,7 @@ public class EditorPanel extends JPanel implements MouseListener {
 		level.setPlayer(player);
 		
 		addMouseListener(this);
+		addMouseMotionListener(this);
 
 		this.tx = texture;
 		
@@ -157,8 +159,15 @@ public class EditorPanel extends JPanel implements MouseListener {
 			BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
 		}
 		
-		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id);
-		level.setItem(item_id, e.getX()/32, e.getY()/32);
+		if (e.getButton() == MouseEvent.BUTTON3) {
+			level.setItem(0, e.getX()/32, e.getY()/32);
+			System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + 0);
+		}
+		else {
+			level.setItem(item_id, e.getX()/32, e.getY()/32);
+			System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id);
+		}		
+		
 		repaint();
 		
 	}
@@ -176,6 +185,44 @@ public class EditorPanel extends JPanel implements MouseListener {
 			System.out.println("Level input");
 		else
 			System.out.println("NULL Level input");
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+
+		if (level == null) {
+			System.out.println("LEVEL NULL!");
+		}
+
+		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected()) {
+			player.setColumn(e.getX()/32);
+			player.setRow(e.getY()/32);
+		}
+		else if (level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) {
+			if (getPlayerDir() < 3)
+				setPlayerDir(getPlayerDir() + 1);
+			else
+				setPlayerDir(0);
+			BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
+		}
+		
+		if (e.getButton() == MouseEvent.BUTTON3) {
+			level.setItem(0, e.getX()/32, e.getY()/32);
+			System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + 0);
+		}
+		else {
+			level.setItem(item_id, e.getX()/32, e.getY()/32);
+			System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id);
+		}		
+		
+		repaint();
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
