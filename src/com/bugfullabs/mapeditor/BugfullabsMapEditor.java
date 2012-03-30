@@ -20,37 +20,37 @@ import javax.swing.filechooser.FileFilter;
 public class BugfullabsMapEditor {
 
 	   static JFrame mFrame;
-	   
+
 	   static JDesktopPane mDesktop;
-	   
+
 	   static Menu mMenu;
 
 	   static JFileChooser mSelectLeveLPack;
 
 	   static JFileChooser mOpen;
-	   
+
 	   public static Editor mEditor;
-	   
+
 	   static LevelFileReader mLevelFileReader;
-	   
+
 	   public static void main(String[] args) {
-	    	
+
 	      mFrame = new JFrame("Bugfullabs Map Maker");
 	      mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	      mFrame.setSize(1050, 570);
-	      
+
 	      mDesktop = new JDesktopPane();
 	      mDesktop.setVisible(true);
 	      mFrame.add(mDesktop);
-	      
+
 	      mSelectLeveLPack = new JFileChooser();
 	      mSelectLeveLPack.setCurrentDirectory(new File("C:/Users/dlt/git/TheGame/TheGame/assets/gfx/game"));
-	      
+
 		  mSelectLeveLPack.setFileFilter(new FileFilter(){
 
 			@Override
 		    	  public boolean accept(File f){
-		    		  
+
 		    		  if (f.isDirectory()) {
 		    		        return true;
 		    		  }
@@ -64,21 +64,21 @@ public class BugfullabsMapEditor {
 
 		    		    return false;  
 		    	  }
-			
+
 
 			@Override
 			public String getDescription() {
 				return null;
 			}});
-		  
+
 		  mOpen = new JFileChooser();
 	      mOpen.setCurrentDirectory(new File("C:/Users/dlt/git/TheGame/TheGame/assets/levels"));
-	      
+
 	      mMenu = new Menu(mFrame){
 	    	  @Override
 	    	  public void onAction(ActionEvent e){
 	    		  if (e.getSource().equals(this.menuNewFile)) {
-	    			  
+
 	    			  if (mEditor == null) {
 		    			  int returnVal = mSelectLeveLPack.showOpenDialog(null);
 		    			  if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -87,8 +87,8 @@ public class BugfullabsMapEditor {
 		    	          }
 	    			  }
 	    			  else if (mEditor != null) {
-	    				  
-	    				  
+
+
 	    				  int a = JOptionPane.showConfirmDialog(null,
 	    						  "Do you want to save level, before creating new one?\n"
 	  						    + "All unsaved changes will be lost.\n",
@@ -101,14 +101,15 @@ public class BugfullabsMapEditor {
 	    					  openBrandNewEditor();
 	    				  }
 	    			  }
-	    			  
+
 	    		  }
 	    		  else if (e.getSource().equals(this.menuOpen)) {
-		    			  
+
 		   			  if (mEditor == null) {
 		    			  int returnValOpen = mOpen.showOpenDialog(null);
 		    			  int returnValLP = mSelectLeveLPack.showOpenDialog(null);
 		    			  if (returnValOpen == JFileChooser.APPROVE_OPTION && returnValLP == JFileChooser.APPROVE_OPTION) {
+		    				  clear();
 		    				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
 		    				  mLevelFileReader = new LevelFileReader(mOpen.getSelectedFile());
 		    				  mEditor.mEditorPanel.setLevel(mLevelFileReader.getLevel());
@@ -118,8 +119,8 @@ public class BugfullabsMapEditor {
 		    	          }
 		   			  }
 		    		  else if (mEditor != null) {
-		    				  
-		    				  
+
+
 		    				  int a = JOptionPane.showConfirmDialog(null,
 		    						  "Do you want to save level, before creating new one?\n"
 		  						    + "All unsaved changes will be lost.\n",
@@ -129,11 +130,10 @@ public class BugfullabsMapEditor {
 		    					  new SaveMenu(mFrame, true);
 		    				  }
 		    				  else if (a == 1) {
-		    					  clear();
 		    					  int returnValOpen = mOpen.showOpenDialog(null);
 				    			  int returnValLP = mSelectLeveLPack.showOpenDialog(null);
 				    			  if (returnValOpen == JFileChooser.APPROVE_OPTION && returnValLP == JFileChooser.APPROVE_OPTION) {
-				    				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
+				    				  mEditor.setTexturePack(mSelectLeveLPack.getSelectedFile());
 				    				  mLevelFileReader = new LevelFileReader(mOpen.getSelectedFile());
 				    				  mEditor.mEditorPanel.setLevel(mLevelFileReader.getLevel());
 				    				  System.out.println("Level id: " + mEditor.mEditorPanel.level.getId() + ", LevelPackId: " + mEditor.mEditorPanel.level.getLevelPack());
@@ -142,15 +142,15 @@ public class BugfullabsMapEditor {
 				    	          }
 		    				  }
 		    			  }
-		    			  
+
 	    		  }
 	    		  else if(e.getSource().equals(this.menuSettings)){
-	    			  
+
 	    			  new Settings(mFrame);
-	    			  
+
 	    		  }
 	    		  else if(e.getSource().equals(this.menuSave)){
-	    			  
+
 	    			  new SaveMenu(mFrame, false);
 
 	    		  }
@@ -162,7 +162,7 @@ public class BugfullabsMapEditor {
 
 	    }
 
-	    
+
 	    public static void openBrandNewEditor() {
 	    	int returnVal = mSelectLeveLPack.showOpenDialog(null);
 			  if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -171,9 +171,8 @@ public class BugfullabsMapEditor {
 				  System.out.println("openBrandNewEditor();");
 			  }
 	    }
-	    
+
 	    public static void clear() {
-	    	mEditor.clear();
 			mEditor = null;
 	    }
 
@@ -187,6 +186,6 @@ public class BugfullabsMapEditor {
 	        }
 	        return ext;
 	    }
-	    
-		    	    
+
+
 }

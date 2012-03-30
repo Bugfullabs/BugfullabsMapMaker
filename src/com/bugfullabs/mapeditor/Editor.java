@@ -39,18 +39,26 @@ public class Editor {
 	public void setSelectedItemId(int id) {
 		selected_item_id = id;
 	}
+
+	public void setTexturePack(File texture) {
+		TexturePack tx = TexturePackLoader.createFromFile(texture);
+		mItemsPanel.setTexturePack(tx);
+		mEditorPanel.setTexturePack(tx);
+		
+	}
 	
 	public int getSelectedItemId() {
 		return selected_item_id;
 	}
 
 	public void clear() {
-		mDesktop.removeAll();
-		mItemsPanel.removeAll();
-		mEditorPanel.removeAll();
-		selected_item_id = 0;
-
-		System.out.println("mEditor.clear();");
+			mDesktop.removeAll();
+			mItemsPanel.removeAll();
+			mEditorPanel.removeAll();
+			selected_item_id = 1;
+			mEditorPanel.level = null;
+	
+			System.out.println("mEditor.clear();");
 	}
 
 }

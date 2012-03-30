@@ -17,7 +17,7 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	
 	private Graphics2D g2d;
 	private TexturePack tx;
-	private static int item_id = 1;
+	private static int item_id;
 	public PlayerEntity player;
 	
 	public Level level;
@@ -25,10 +25,10 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	EditorPanel(String name, TexturePack texture, int x, int y, int width, int height){
 		super();
 		
-		level = new Level(1, 1, "texturepack_02", width, height);
-		player = new PlayerEntity(-1, -1, 0, 1);
+		level = new Level(1, 1, "texturepack_02", width, height, -1, -1, 1);
+		this.player = level.player;
 		level.setPlayer(player);
-		
+
 		addMouseListener(this);
 		addMouseMotionListener(this);
 
@@ -147,11 +147,12 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 			System.out.println("LEVEL NULL!");
 		}
 
-		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected()) {
+		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected() && e.getButton() == MouseEvent.BUTTON1) {
 			player.setColumn(e.getX()/32);
 			player.setRow(e.getY()/32);
+			level.setItem(0, e.getX()/32, e.getY()/32);
 		}
-		else if (level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) {
+		else if (level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected() && e.getButton() == MouseEvent.BUTTON1) {
 			if (getPlayerDir() < 3)
 				setPlayerDir(getPlayerDir() + 1);
 			else
@@ -159,15 +160,11 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 			BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
 		}
 		
-		if (e.getButton() == MouseEvent.BUTTON3) {
-			level.setItem(0, e.getX()/32, e.getY()/32);
-			System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + 0);
-		}
-		else {
+		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id);
+		if (e.getButton() == MouseEvent.BUTTON1)
 			level.setItem(item_id, e.getX()/32, e.getY()/32);
-			System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id);
-		}		
-		
+		else if (e.getButton() == MouseEvent.BUTTON3)
+			level.setItem(0, e.getX()/32, e.getY()/32);
 		repaint();
 		
 	}
@@ -179,48 +176,25 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 
 	public void setLevel(Level l) {
 		this.level = l;
+		this.level.setPlayer(l.player);
 		System.out.println("Level id: " + this.level.getId() + ", LevelPackId: " + this.level.getLevelPack());
-		
-		if (l != null)
-			System.out.println("Level input");
-		else
-			System.out.println("NULL Level input");
+	}
+	
+
+	public void setTexturePack(TexturePack texture) {
+		this.tx = texture;
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
-		if (level == null) {
-			System.out.println("LEVEL NULL!");
-		}
-
-		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected()) {
-			player.setColumn(e.getX()/32);
-			player.setRow(e.getY()/32);
-		}
-		else if (level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) {
-			if (getPlayerDir() < 3)
-				setPlayerDir(getPlayerDir() + 1);
-			else
-				setPlayerDir(0);
-			BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
-		}
-		
-		if (e.getButton() == MouseEvent.BUTTON3) {
-			level.setItem(0, e.getX()/32, e.getY()/32);
-			System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + 0);
-		}
-		else {
-			level.setItem(item_id, e.getX()/32, e.getY()/32);
-			System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id);
-		}		
-		
+		level.setItem(item_id, e.getX()/32, e.getY()/32);
 		repaint();
 		
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
+	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

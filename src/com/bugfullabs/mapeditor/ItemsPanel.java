@@ -29,6 +29,10 @@ public class ItemsPanel extends JPanel implements MouseListener {
 
 	}
 	
+	public void setTexturePack(TexturePack texture) {
+		this.tx = texture;
+	}
+	
 	@Override
 	public void paintComponent(Graphics g){
 		

@@ -27,7 +27,7 @@ public class XMLWriter{
 			out.writeCharacters("\n");
 			
 			out.writeStartElement("level");
-
+			
 			out.writeAttribute("id", Integer.toString(level.getId()));
 			out.writeAttribute("rows", Integer.toString(level.getHeight()/32));
 			out.writeAttribute("columns", Integer.toString(level.getWidth()/32));
@@ -67,19 +67,16 @@ public class XMLWriter{
 				
 				out.writeCharacters("\n");
 				
-				for(int i = 0; i < level.getNumberOfPlayers(); i++){
-				
 					out.writeStartElement("player");
-					out.writeAttribute("color", Integer.toString(level.getPlayer(i).getColor()));
-					out.writeAttribute("column", Integer.toString(level.getPlayer(i).getColumn()));
-					out.writeAttribute("row", Integer.toString(level.getPlayer(i).getRow()));
-					out.writeAttribute("id", Integer.toString(i+1));
-					out.writeAttribute("dir", Integer.toString(level.getPlayer(i).getDir()));	
+					out.writeAttribute("color", Integer.toString(BugfullabsMapEditor.mEditor.mEditorPanel.player.getColor()));
+					out.writeAttribute("column", Integer.toString(BugfullabsMapEditor.mEditor.mEditorPanel.player.getColumn()));
+					out.writeAttribute("row", Integer.toString(BugfullabsMapEditor.mEditor.mEditorPanel.player.getRow()));
+					out.writeAttribute("id", Integer.toString(1));
+					out.writeAttribute("dir", Integer.toString(BugfullabsMapEditor.mEditor.mEditorPanel.player.getDir()));	
 					out.writeEndElement();
 				
 					out.writeCharacters("\n");
 					
-				}
 					
 			out.writeEndElement();//</level>
 			

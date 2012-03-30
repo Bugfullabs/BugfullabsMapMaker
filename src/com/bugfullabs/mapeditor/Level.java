@@ -1,8 +1,5 @@
 package com.bugfullabs.mapeditor;
 
-import java.util.ArrayList;
-
-
 
 public class Level{
 	
@@ -13,10 +10,12 @@ public class Level{
 	private String texture;
 	
 	
-	private ArrayList<PlayerEntity> players;
+	public PlayerEntity player;
 	public int pattern[][];
 	
-	Level(int id, int pack, String tex, int w, int h){
+	Level(int id, int pack, String tex, int w, int h, int px, int py, int pdir){
+		
+		this.player = new PlayerEntity(px, py, 0, pdir);
 		
 		this.width = w;
 		this.height = h;
@@ -24,8 +23,6 @@ public class Level{
 		this.id = id;
 		this.levelpack = pack;
 		this.texture = tex;
-		
-		this.players = new ArrayList<PlayerEntity>();
 		
 		this.pattern = new int[w][h];
 		
@@ -49,7 +46,7 @@ public class Level{
 	}
 	
 	public void setPlayer(PlayerEntity p){
-		this.players.add(p);
+		this.player = p;
 	}
 	
 
@@ -90,12 +87,12 @@ public class Level{
 		return texture;
 	}
 	
-	public PlayerEntity getPlayer(int id){
-		return players.get(id);
+	public PlayerEntity getPlayer(){
+		return player;
 	}
 
 	public int getNumberOfPlayers(){
-		return players.size();
+		return 1;
 	}
 	
 	private boolean isCorrect(int column, int row) {
@@ -122,7 +119,7 @@ class PlayerEntity{
 	
 	public int getDir(){
 		return dir;
-	}
+	}	
 	
 	public void setColor(int c){
 		this.color = c;
@@ -153,4 +150,3 @@ class PlayerEntity{
 	}
 	
 }
-

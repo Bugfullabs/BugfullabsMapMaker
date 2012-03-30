@@ -54,7 +54,7 @@ public class LevelHandler extends DefaultHandler{
 
 				System.out.println("Entered 'level' tag");
 				
-				level = new Level(Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("levelpackid")), atts.getValue("texture"), Integer.parseInt(atts.getValue("columns"))*32, Integer.parseInt(atts.getValue("rows"))*32);
+				level = new Level(Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("levelpackid")), atts.getValue("texture"), Integer.parseInt(atts.getValue("columns"))*32, Integer.parseInt(atts.getValue("rows"))*32, -1, -1, 1);
 				System.out.println("Level id: " + level.getId() + ", LevelPackId: " + level.getLevelPack());
 				
 			}
