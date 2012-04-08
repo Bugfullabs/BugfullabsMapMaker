@@ -68,7 +68,6 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 					xform.translate(k*32, j*32);
 					xform.rotate(player.getDir()*(Math.PI/2), tx.getTextureRegion(level.getItem(k, j)).getWidth()/2, tx.getTextureRegion(level.getItem(k, j)).getHeight()/2);
 					g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), xform, null);
-					System.out.println("finish placed, rotation: " + (player.getDir()));
 				}
 				
 				k++;
