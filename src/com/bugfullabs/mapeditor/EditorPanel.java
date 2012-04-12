@@ -11,6 +11,10 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
+/*
+ * Nowe blocki tutaj w kilku miejscach oraz w ItemsPanel w jednym miejscu
+ * 
+ */
 
 @SuppressWarnings("serial")
 public class EditorPanel extends JPanel implements MouseListener, MouseMotionListener {
@@ -25,7 +29,7 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	EditorPanel(String name, TexturePack texture, int x, int y, int width, int height){
 		super();
 		
-		level = new Level(1, 1, "texturepack_02", width, height, -1, -1, 1);
+		level = new Level(1, 1, texture.getFileName(), width, height, -1, -1, 1);
 		this.player = level.player;
 		level.setPlayer(player);
 
@@ -60,13 +64,13 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 
 //				System.out.print("(" + k + "," + j + ") ");
 
-				if (level.getItem(k, j) != 0 && level.getItem(k, j) != 2) {
+				if (level.getItem(k, j) != 0 && level.getItem(k, j) != 2 && level.getItem(k, j) != 7 && level.getItem(k, j) != 8) {
 					g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), null, k*32, j*32);
 				}
-				else if (level.getItem(k, j) == 2) {
+				else if (level.getItem(k, j) == 2 || level.getItem(k, j) == 7 || level.getItem(k, j) == 8) {
 					AffineTransform xform = new AffineTransform();
 					xform.translate(k*32, j*32);
-					xform.rotate(player.getDir()*(Math.PI/2), tx.getTextureRegion(level.getItem(k, j)).getWidth()/2, tx.getTextureRegion(level.getItem(k, j)).getHeight()/2);
+					xform.rotate(level.getItemAtts(k, j)*(Math.PI/2), tx.getTextureRegion(level.getItem(k, j)).getWidth()/2, tx.getTextureRegion(level.getItem(k, j)).getHeight()/2);
 					g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), xform, null);
 				}
 				
@@ -149,21 +153,24 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected() && e.getButton() == MouseEvent.BUTTON1) {
 			player.setColumn(e.getX()/32);
 			player.setRow(e.getY()/32);
-			level.setItem(0, e.getX()/32, e.getY()/32);
+			level.setItem(0, e.getX()/32, e.getY()/32, 0);
 		}
-		else if (level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected() && e.getButton() == MouseEvent.BUTTON1) {
-			if (getPlayerDir() < 3)
-				setPlayerDir(getPlayerDir() + 1);
+		else if (((level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == 7 && ItemsPanel.letPassSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == 8 && ItemsPanel.letPassOneDirSelected())) && e.getButton() == MouseEvent.BUTTON1) {
+			if (level.getItemAtts(e.getX()/32, e.getY()/32) < 3) {
+				System.out.println(level.getItemAtts(e.getX()/32, e.getY()/32));
+				level.setItemAtts(e.getX()/32, e.getY()/32, level.getItemAtts(e.getX()/32, e.getY()/32) + 1);
+				System.out.println(level.getItemAtts(e.getX()/32, e.getY()/32));
+			}
 			else
-				setPlayerDir(0);
+				level.setItemAtts(e.getX()/32, e.getY()/32, 0);
 			BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
 		}
 		
-		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id);
-		if (e.getButton() == MouseEvent.BUTTON1)
-			level.setItem(item_id, e.getX()/32, e.getY()/32);
+		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id + ", item atts: " + level.getItemAtts(e.getX()/32, e.getY()/32));
+		if (e.getButton() == MouseEvent.BUTTON1 && !(level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == 7 && ItemsPanel.letPassSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == 8 && ItemsPanel.letPassOneDirSelected()))
+			level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
 		else if (e.getButton() == MouseEvent.BUTTON3)
-			level.setItem(0, e.getX()/32, e.getY()/32);
+			level.setItem(0, e.getX()/32, e.getY()/32, 0);
 		repaint();
 		
 	}
@@ -187,7 +194,7 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
-		level.setItem(item_id, e.getX()/32, e.getY()/32);
+		level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
 		repaint();
 		
 	}

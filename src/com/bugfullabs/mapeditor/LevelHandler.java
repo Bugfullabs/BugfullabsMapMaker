@@ -85,7 +85,7 @@ public class LevelHandler extends DefaultHandler{
 			}
 			else if (qName.equals("item")) {
 				if(in_rowtag == true) {
-					level.setItem(Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("column")), current_row);
+					level.setItem(Integer.parseInt(atts.getValue("id")), Integer.parseInt(atts.getValue("column")), current_row, atts.getValue("attribute") != null ? Integer.parseInt(atts.getValue("attribute")) : 0);
 					// TODO: delete
 					System.out.println("Entered 'item' tag, params: " + Integer.parseInt(atts.getValue("id")) + ", " + Integer.parseInt(atts.getValue("column")) + ", " + current_row);
 				}

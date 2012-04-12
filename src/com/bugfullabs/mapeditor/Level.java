@@ -9,9 +9,12 @@ public class Level{
 	private int levelpack;
 	private String texture;
 	
+	public final static int LEVEL = 0;
+	public final static int ATTS = 1;
+	
 	
 	public PlayerEntity player;
-	public int pattern[][];
+	public int pattern[][][];
 	
 	Level(int id, int pack, String tex, int w, int h, int px, int py, int pdir){
 		
@@ -24,12 +27,13 @@ public class Level{
 		this.levelpack = pack;
 		this.texture = tex;
 		
-		this.pattern = new int[w][h];
+		this.pattern = new int[w][h][2];
 		
 		for(int i = 0; i < w; i++){
 			for(int j = 0; j < h; j++){
 			
-			this.pattern[i][j] = 0;
+			this.pattern[i][j][LEVEL] = 0;
+			this.pattern[i][j][ATTS] = 0;
 				
 			}
 		}
@@ -37,9 +41,10 @@ public class Level{
 	}
 	
 	
-	public void setItem(int item, int column, int row){
+	public void setItem(int item, int column, int row, int attribute){
 		if(isCorrect(column, row)){
-			this.pattern[column][row] = item;
+			this.pattern[column][row][LEVEL] = item;
+			this.pattern[column][row][ATTS] = attribute;
 		}
 		else
 			System.out.println("Niepoprawne koordynaty");
@@ -52,11 +57,28 @@ public class Level{
 
 	public int getItem(int column, int row){
 		if(isCorrect(column, row)){
-		return pattern[column][row];
+		return pattern[column][row][LEVEL];
 		}
 		else
 			System.out.println("Niepoprawne koordynaty");
 		return 0;
+	}
+
+	public int getItemAtts(int column, int row){
+		if(isCorrect(column, row)){
+		return pattern[column][row][ATTS];
+		}
+		else
+			System.out.println("Niepoprawne koordynaty");
+		return 0;
+	}
+	
+	public void setItemAtts(int column, int row, int atts) {
+		if(isCorrect(column, row)){
+			pattern[column][row][ATTS] = atts;
+		}
+		else
+			System.out.println("Niepoprawne koordynaty");
 	}
 	
 	public int getWidth(){

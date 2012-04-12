@@ -53,11 +53,13 @@ class TexturePackHandler extends DefaultHandler{
 	
 	private TexturePack pack;
 	private File file;
+	private String texture_file_name;
 	
 	
 	public TexturePackHandler(File pFile){
 		super();
 		file = pFile;
+		this.texture_file_name = file.getName();
 	}
 	
 	
@@ -84,7 +86,7 @@ class TexturePackHandler extends DefaultHandler{
 		if (qName.equals("texture")) {
 			
 			try {			
-				pack = new TexturePack(ImageIO.read(new File(file.getParent()+File.separator+atts.getValue("file"))), Integer.parseInt(atts.getValue("width")), Integer.parseInt(atts.getValue("height")));
+				pack = new TexturePack(ImageIO.read(new File(file.getParent()+File.separator+atts.getValue("file"))), Integer.parseInt(atts.getValue("width")), Integer.parseInt(atts.getValue("height")), texture_file_name);
 			} catch (IOException e) {
 				e.printStackTrace();			
 			}

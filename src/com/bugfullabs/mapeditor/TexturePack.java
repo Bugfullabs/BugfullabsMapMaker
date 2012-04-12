@@ -8,11 +8,15 @@ import java.util.ArrayList;
 public class TexturePack{
 	
 	private ArrayList<BufferedImage> textures;
-	
+
 	private BufferedImage mainImage;
 	
-	TexturePack(BufferedImage img, int width, int height){
+	private String texture_name;
+	
+	TexturePack(BufferedImage img, int width, int height, String tex_name){
 
+		texture_name = tex_name;
+		
 		this.mainImage = img;
 	
 		textures = new ArrayList<BufferedImage>(20);
@@ -33,6 +37,10 @@ public class TexturePack{
 
 	public int getSize(){
 		return this.textures.size();
+	}
+	
+	public String getFileName(){
+		return texture_name;
 	}
 
 }

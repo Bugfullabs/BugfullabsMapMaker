@@ -49,6 +49,7 @@ public class XMLWriter{
 					out.writeStartElement("item");
 					out.writeAttribute("column", Integer.toString(j));
 					out.writeAttribute("id", Integer.toString(level.getItem(j, i)));
+					out.writeAttribute("attribute", Integer.toString(level.getItemAtts(j, i)));
 					out.writeEndElement();//</item>
 				
 					out.writeCharacters("\n");
