@@ -18,7 +18,7 @@ public class ItemsPanel extends JPanel implements MouseListener {
 	private Graphics2D g2d;
 	private TexturePack tx;
 	boolean drawing = false;
-	static boolean player_selected = false;
+
 
 	
 	ItemsPanel(String name, TexturePack texture, int x, int y, int width, int height){
@@ -64,11 +64,7 @@ public class ItemsPanel extends JPanel implements MouseListener {
 	}
 	
 
-	
-	public static boolean playerSelected() {
-		return player_selected;
-	}
-	
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -93,12 +89,6 @@ public class ItemsPanel extends JPanel implements MouseListener {
 
 		drawing = true;
 
-		if ((((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) == 0 && !player_selected) {
-			player_selected = true;
-		}
-		else if ((((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) == 0 && player_selected) {
-			player_selected = false;
-		}
 		
 		
 		System.out.println("position_items: " + e.getX() + ", " + e.getY() + ", id: " + ((((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) <= tx.getSize() ? (((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) : 0));

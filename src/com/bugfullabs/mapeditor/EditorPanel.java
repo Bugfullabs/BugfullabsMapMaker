@@ -29,7 +29,7 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	EditorPanel(String name, TexturePack texture, int x, int y, int width, int height){
 		super();
 		
-		level = new Level(1, 1, texture.getFileName(), width, height, -1, -1, 1);
+		level = new Level(1, 1, texture.getFileName(), width, height, -1, -1);
 		this.player = level.player;
 		level.setPlayer(player);
 
@@ -61,8 +61,9 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 
 			for(int i = 0; i < level.getWidth()/32 * level.getHeight()/32; i++) {
 
+
 				g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), null, k*32, j*32);
-				
+
 				k++;
 		
 				if (k >= this.getWidth()/32) {
@@ -128,10 +129,10 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 		
 		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id + ", item atts: " + level.getItemAtts(e.getX()/32, e.getY()/32));
 		//PLAYER
-		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected() && e.getButton() == MouseEvent.BUTTON1) {
+		if (e.getButton() == MouseEvent.BUTTON2) {
 			player.setColumn(e.getX()/32);
 			player.setRow(e.getY()/32);
-			level.setItem(0, e.getX()/32, e.getY()/32, 0);
+			
 		}else if(e.getButton() == MouseEvent.BUTTON1){
 		//OTHER	
 		level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
@@ -148,10 +149,8 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
-		if(e.getButton() == MouseEvent.BUTTON1)
 		level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
-		else if (e.getButton() == MouseEvent.BUTTON3)
-		level.setItem(0, e.getX()/32, e.getY()/32, 0);
+
 		
 		repaint();
 		

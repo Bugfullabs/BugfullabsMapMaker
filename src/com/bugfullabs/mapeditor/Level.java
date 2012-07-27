@@ -16,7 +16,7 @@ public class Level{
 	public PlayerEntity player;
 	public int pattern[][][];
 	
-	Level(int id, int pack, String tex, int w, int h, int px, int py, int pdir){
+	Level(int id, int pack, String tex, int w, int h, int px, int py){
 		
 		this.player = new PlayerEntity(px, py, 0);
 		
@@ -32,7 +32,7 @@ public class Level{
 		for(int i = 0; i < w; i++){
 			for(int j = 0; j < h; j++){
 			
-			this.pattern[i][j][LEVEL] = 0;
+			this.pattern[i][j][LEVEL] = 5;
 			this.pattern[i][j][ATTS] = 0;
 				
 			}
