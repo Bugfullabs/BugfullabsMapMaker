@@ -72,8 +72,7 @@ public class XMLWriter{
 					out.writeAttribute("color", Integer.toString(BugfullabsMapEditor.mEditor.mEditorPanel.player.getColor()));
 					out.writeAttribute("column", Integer.toString(BugfullabsMapEditor.mEditor.mEditorPanel.player.getColumn()));
 					out.writeAttribute("row", Integer.toString(BugfullabsMapEditor.mEditor.mEditorPanel.player.getRow()));
-					out.writeAttribute("id", Integer.toString(1));
-					out.writeAttribute("dir", Integer.toString(BugfullabsMapEditor.mEditor.mEditorPanel.player.getDir()));	
+					out.writeAttribute("id", Integer.toString(0));	
 					out.writeEndElement();
 				
 					out.writeCharacters("\n");

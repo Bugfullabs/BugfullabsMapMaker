@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 /*
  * Nowe blocki tutaj w kilku miejscach oraz w ItemsPanel w jednym miejscu
+ * Dziêki
  * 
  */
 
@@ -117,13 +118,6 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 		repaint();
 	}
 
-	public void setPlayerDir(int dir) {
-		player.setDir(dir);
-	}
-
-	public int getPlayerDir() {
-		return player.getDir();
-	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {

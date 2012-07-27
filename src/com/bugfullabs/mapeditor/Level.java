@@ -18,7 +18,7 @@ public class Level{
 	
 	Level(int id, int pack, String tex, int w, int h, int px, int py, int pdir){
 		
-		this.player = new PlayerEntity(px, py, 0, pdir);
+		this.player = new PlayerEntity(px, py, 0);
 		
 		this.width = w;
 		this.height = h;
@@ -126,31 +126,24 @@ public class Level{
 
 
 class PlayerEntity{
-	
+
 	private int column;
 	private int row;
 	private int color;
-	private int dir;
-	
-	public PlayerEntity(int c, int r, int color, int d){
+
+	public PlayerEntity(int c, int r, int color){
 		this.color = color;
-		this.dir = d;
 		this.column = c;
 		this.row = r;
 	}
-	
-	public int getDir(){
-		return dir;
-	}	
-	
+
+
+
 	public void setColor(int c){
 		this.color = c;
 	}	
-	
-	public void setDir(int d){
-		this.dir = d;
-	}
-	
+
+
 	public int getRow(){
 		return row;
 	}
@@ -158,17 +151,17 @@ class PlayerEntity{
 	public void setRow(int r){
 		this.row = r;
 	}
-	
+
 	public int getColumn(){
 		return column;
 	}
-	
+
 	public void setColumn(int c){
 		this.column = c;
 	}
-	
+
 	public int getColor(){
 		return color;
 	}
-	
+
 }

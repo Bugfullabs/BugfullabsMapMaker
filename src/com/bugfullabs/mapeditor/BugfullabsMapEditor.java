@@ -30,9 +30,7 @@ public class BugfullabsMapEditor {
 	   static JFileChooser mOpen;
 
 	   public static Editor mEditor;
-
-	   static LevelFileReader mLevelFileReader;
-
+	   
 	   public static void main(String[] args) {
 
 	      mFrame = new JFrame("Bugfullabs Map Maker");
@@ -111,8 +109,7 @@ public class BugfullabsMapEditor {
 		    			  if (returnValOpen == JFileChooser.APPROVE_OPTION && returnValLP == JFileChooser.APPROVE_OPTION) {
 		    				  clear();
 		    				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
-		    				  mLevelFileReader = new LevelFileReader(mOpen.getSelectedFile());
-		    				  mEditor.mEditorPanel.setLevel(mLevelFileReader.getLevel());
+		    				  mEditor.mEditorPanel.setLevel(LevelFileReader.getFromFile(mOpen.getSelectedFile()));
 		    				  System.out.println("Level id: " + mEditor.mEditorPanel.level.getId() + ", LevelPackId: " + mEditor.mEditorPanel.level.getLevelPack());
 		    				  System.out.println("First Editor, Open");
 		    				  mEditor.mEditorPanel.repaintIt();
@@ -134,8 +131,7 @@ public class BugfullabsMapEditor {
 				    			  int returnValLP = mSelectLeveLPack.showOpenDialog(null);
 				    			  if (returnValOpen == JFileChooser.APPROVE_OPTION && returnValLP == JFileChooser.APPROVE_OPTION) {
 				    				  mEditor.setTexturePack(mSelectLeveLPack.getSelectedFile());
-				    				  mLevelFileReader = new LevelFileReader(mOpen.getSelectedFile());
-				    				  mEditor.mEditorPanel.setLevel(mLevelFileReader.getLevel());
+				    				  mEditor.mEditorPanel.setLevel(LevelFileReader.getFromFile(mOpen.getSelectedFile()));
 				    				  System.out.println("Level id: " + mEditor.mEditorPanel.level.getId() + ", LevelPackId: " + mEditor.mEditorPanel.level.getLevelPack());
 				    				  System.out.println("First Editor, Open");
 				    				  mEditor.mEditorPanel.repaintIt();
