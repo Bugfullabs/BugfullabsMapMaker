@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
@@ -49,7 +48,6 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 		
 		g2d = (Graphics2D) g;
 		g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
-		g2d.drawImage(tx.getTextureRegion(16), null, 0, 0);
 
 		drawGrid(32, 32);
 		
@@ -63,17 +61,7 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 
 			for(int i = 0; i < level.getWidth()/32 * level.getHeight()/32; i++) {
 
-//				System.out.print("(" + k + "," + j + ") ");
-
-				if (level.getItem(k, j) != 0 && level.getItem(k, j) != 2 && level.getItem(k, j) != 7 && level.getItem(k, j) != 8) {
-					g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), null, k*32, j*32);
-				}
-				else if (level.getItem(k, j) == 2 || level.getItem(k, j) == 7 || level.getItem(k, j) == 8) {
-					AffineTransform xform = new AffineTransform();
-					xform.translate(k*32, j*32);
-					xform.rotate(level.getItemAtts(k, j)*(Math.PI/2), tx.getTextureRegion(level.getItem(k, j)).getWidth()/2, tx.getTextureRegion(level.getItem(k, j)).getHeight()/2);
-					g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), xform, null);
-				}
+				g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), null, k*32, j*32);
 				
 				k++;
 		
@@ -117,8 +105,71 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	public void repaintIt() {
 		repaint();
 	}
+	
+	public void setLevel(Level l) {
+		this.level = l;
+		this.level.setPlayer(l.player);
+		System.out.println("Level id: " + this.level.getId() + ", LevelPackId: " + this.level.getLevelPack());
+	}
+	
+
+	public void setTexturePack(TexturePack texture) {
+		this.tx = texture;
+	}
+	
 
 
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+		if (level == null) {
+			System.out.println("LEVEL NULL!");
+		}
+		
+		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id + ", item atts: " + level.getItemAtts(e.getX()/32, e.getY()/32));
+		//PLAYER
+		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected() && e.getButton() == MouseEvent.BUTTON1) {
+			player.setColumn(e.getX()/32);
+			player.setRow(e.getY()/32);
+			level.setItem(0, e.getX()/32, e.getY()/32, 0);
+		}else if(e.getButton() == MouseEvent.BUTTON1){
+		//OTHER	
+		level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
+		BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
+		}
+		
+		if (e.getButton() == MouseEvent.BUTTON3)
+		level.setItem(0, e.getX()/32, e.getY()/32, 0);
+		
+		repaint();
+	}
+
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+
+		if(e.getButton() == MouseEvent.BUTTON1)
+		level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
+		else if (e.getButton() == MouseEvent.BUTTON3)
+		level.setItem(0, e.getX()/32, e.getY()/32, 0);
+		
+		repaint();
+		
+	}
+	
+	
+	
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -136,67 +187,6 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-
-		if (level == null) {
-			System.out.println("LEVEL NULL!");
-		}
-
-		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected() && e.getButton() == MouseEvent.BUTTON1) {
-			player.setColumn(e.getX()/32);
-			player.setRow(e.getY()/32);
-			level.setItem(0, e.getX()/32, e.getY()/32, 0);
-		}
-		else if (((level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == 7 && ItemsPanel.letPassSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == 8 && ItemsPanel.letPassOneDirSelected())) && e.getButton() == MouseEvent.BUTTON1) {
-			if (level.getItemAtts(e.getX()/32, e.getY()/32) < 3) {
-				System.out.println(level.getItemAtts(e.getX()/32, e.getY()/32));
-				level.setItemAtts(e.getX()/32, e.getY()/32, level.getItemAtts(e.getX()/32, e.getY()/32) + 1);
-				System.out.println(level.getItemAtts(e.getX()/32, e.getY()/32));
-			}
-			else
-				level.setItemAtts(e.getX()/32, e.getY()/32, 0);
-			BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
-		}
-		
-		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id + ", item atts: " + level.getItemAtts(e.getX()/32, e.getY()/32));
-		if (e.getButton() == MouseEvent.BUTTON1 && !(level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == 7 && ItemsPanel.letPassSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == 8 && ItemsPanel.letPassOneDirSelected()))
-			level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
-		else if (e.getButton() == MouseEvent.BUTTON3)
-			level.setItem(0, e.getX()/32, e.getY()/32, 0);
-		repaint();
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-
-	}
-
-	public void setLevel(Level l) {
-		this.level = l;
-		this.level.setPlayer(l.player);
-		System.out.println("Level id: " + this.level.getId() + ", LevelPackId: " + this.level.getLevelPack());
-	}
 	
-
-	public void setTexturePack(TexturePack texture) {
-		this.tx = texture;
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-
-		level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
-		repaint();
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }
