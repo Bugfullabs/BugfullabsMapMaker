@@ -32,7 +32,7 @@ public class Level{
 		for(int i = 0; i < w; i++){
 			for(int j = 0; j < h; j++){
 			
-			this.pattern[i][j][LEVEL] = 5;
+			this.pattern[i][j][LEVEL] = 1;
 			this.pattern[i][j][ATTS] = 0;
 				
 			}
