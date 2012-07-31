@@ -169,6 +169,7 @@ public class BugfullabsMapEditor {
 	    }
 
 	    public static void clear() {
+	    	mEditor.clear();
 			mEditor = null;
 	    }
 

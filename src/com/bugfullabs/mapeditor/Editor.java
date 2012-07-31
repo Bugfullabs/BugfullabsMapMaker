@@ -36,6 +36,9 @@ public class Editor {
 		mDesktop.repaint();
 	}
 
+	
+
+	
 	public void setSelectedItemId(int id) {
 		selected_item_id = id;
 	}
