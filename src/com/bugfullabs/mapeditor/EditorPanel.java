@@ -51,9 +51,7 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 
 		drawGrid(32, 32);
 		
-		if (player.getRow() >= 0 && player.getColumn() >= 0)
-			g2d.drawImage(tx.getTextureRegion(0), null, player.getColumn()*32, player.getRow()*32);
-
+		
 		if (level.getWidth() > 0) {
 			
 			int j = 0;
@@ -78,6 +76,15 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 			}
 	
 		}
+		
+		for(int i = 0; i < 3; i++){
+			if(level.getFlameX(i) != -1)
+			g2d.drawImage(tx.getTextureRegion(5), null, level.getFlameX(i)*32, level.getFlameY(i)*32);
+		}
+		
+		if (player.getRow() >= 0 && player.getColumn() >= 0)
+			g2d.drawImage(tx.getTextureRegion(0), null, player.getColumn()*32, player.getRow()*32);
+
 	
 	}
 
@@ -135,12 +142,24 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 			
 		}else if(e.getButton() == MouseEvent.BUTTON1){
 		//OTHER	
+			
+		switch(item_id){
+		
+		case 5: //FLAME
+			level.addFlame(e.getX()/32, e.getY()/32);
+		break;
+		
+		default:
 		level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
+		break;
+		}
+		
 		BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
+		
 		}
 		
 		if (e.getButton() == MouseEvent.BUTTON3)
-		level.setItem(0, e.getX()/32, e.getY()/32, 0);
+		level.setItem(1, e.getX()/32, e.getY()/32, 0);//SOLID
 		
 		repaint();
 	}

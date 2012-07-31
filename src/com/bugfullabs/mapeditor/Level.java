@@ -15,8 +15,12 @@ public class Level{
 	
 	public PlayerEntity player;
 	public int pattern[][][];
+	public int flames[][];
+	
 	
 	Level(int id, int pack, String tex, int w, int h, int px, int py){
+		
+		flames = new int[3][2];
 		
 		this.player = new PlayerEntity(px, py, 0);
 		
@@ -36,6 +40,10 @@ public class Level{
 			this.pattern[i][j][ATTS] = 0;
 				
 			}
+		}
+		
+		for(int i = 0; i < 3;i ++){
+			flames[i][0] = -1;
 		}
 		
 	}
@@ -117,10 +125,52 @@ public class Level{
 		return 1;
 	}
 	
+	public int addFlame(int c, int r){
+		
+		int i;
+		boolean found = false;
+		
+		for(i = 0; i < 3; i++){
+			if(flames[i][0] == -1){
+			found = true;
+			break;
+			}
+		}
+		
+		if(found){
+		flames[i][0] = c;
+		flames[i][1] = r;
+		return i;
+		}else{
+				
+		flames[2][0] = flames[1][0];
+		flames[2][1] = flames[1][1];
+		
+		flames[1][0] = flames[0][0];
+		flames[1][1] = flames[0][1];
+		
+		flames[0][0] = c;
+		flames[0][1] = r;
+		
+				
+		return 0;
+		}
+
+	}
+	
+	public int getFlameX(int id){
+		return flames[id][0];
+	}
+	
+	public int getFlameY(int id){
+		return flames[id][1];
+	}
+	
 	private boolean isCorrect(int column, int row) {
 		
 		return (column >= 0 && column < this.width && row >= 0 && row < this.height);
 	}
+	
 	
 }
 
@@ -138,6 +188,8 @@ class PlayerEntity{
 	}
 
 
+	
+	
 
 	public void setColor(int c){
 		this.color = c;

@@ -70,7 +70,7 @@ public class BugfullabsMapEditor {
 			}});
 
 		  mOpen = new JFileChooser();
-	      mOpen.setCurrentDirectory(new File("C:/Projects/Android/IceMaze/assets/gfx/game"));
+	      mOpen.setCurrentDirectory(new File("C:/Projects/Android/IceMaze/assets/levels"));
 
 	      mMenu = new Menu(mFrame){
 	    	  @Override

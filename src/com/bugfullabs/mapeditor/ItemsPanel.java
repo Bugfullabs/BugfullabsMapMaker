@@ -19,7 +19,8 @@ public class ItemsPanel extends JPanel implements MouseListener {
 	private TexturePack tx;
 	boolean drawing = false;
 
-
+	//private int select_x = 0;
+	//private int select_y = 0;
 	
 	ItemsPanel(String name, TexturePack texture, int x, int y, int width, int height){
 		super();
@@ -59,11 +60,16 @@ public class ItemsPanel extends JPanel implements MouseListener {
 				}
 		
 			}
+		/*	g2d.setColor(Color.GREEN);
+			g2d.drawLine(select_x, select_y, select_x+32, select_y);
+			g2d.drawLine(select_x+32, select_y, select_x+32, select_y+32);
+			g2d.drawLine(select_x+32, select_y+32, select_x, select_y+32);
+			g2d.drawLine(select_x, select_y+32, select_x, select_y);
 
+		*/
 		}
 	}
 	
-
 
 
 	@Override
@@ -92,7 +98,17 @@ public class ItemsPanel extends JPanel implements MouseListener {
 		
 		
 		System.out.println("position_items: " + e.getX() + ", " + e.getY() + ", id: " + ((((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) <= tx.getSize() ? (((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) : 0));
-		EditorPanel.selectItem((((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) <= tx.getSize() ? (((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) : 0);
+		
+		//select_x = (e.getX()/32)*32;
+		//select_y = (e.getY()/32)*32;
+		
+		
+		int selectedItem = ((((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) <= tx.getSize() ? (((this.getWidth()/32) * (e.getY()/32)) + (e.getX()/32)) : 0);
+
+		EditorPanel.selectItem(selectedItem);
+		
+		
+//		repaint();
 		
 	}
 
