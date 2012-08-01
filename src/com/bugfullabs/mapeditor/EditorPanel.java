@@ -29,7 +29,7 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	EditorPanel(String name, TexturePack texture, int x, int y, int width, int height){
 		super();
 		
-		level = new Level(1, 1, texture.getFileName(), width, height, -1, -1);
+		level = new Level(1, 1, texture.getFileName(), width/32, height/32, -1, -1);
 		this.player = level.player;
 		level.setPlayer(player);
 
@@ -52,38 +52,28 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 		drawGrid(32, 32);
 		
 		
-		if (level.getWidth() > 0) {
-			
-			int j = 0;
-			int k = 0;
+			for(int i = 0; i < level.getWidth(); i++){
+				for(int j = 0; j < level.getHeight(); j++){
 
-			for(int i = 0; i < level.getWidth()/32 * level.getHeight()/32; i++) {
+				g2d.drawImage(tx.getTextureRegion(level.getItem(i, j)), null, i*32, j*32);
 
-
-				g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), null, k*32, j*32);
-
-				k++;
-		
-				if (k >= this.getWidth()/32) {
-					k = 0;
-					j++;
-				}
-
-				if (j >= this.getHeight()/32) {
-					break;
-				}
-		
+				System.out.printf("\nITEM ATTS i: " + Integer.toString(i) + " j: " + Integer.toString(j) + " ATTS: " + Integer.toString(level.getItemAtts(i, j)));
+				
+				if(level.getItemAtts(i, j) != 0)
+					g2d.drawImage(tx.getTextureRegion(level.getItemAtts(i, j)), null, i*32, j*32);
 			}
-	
+
 		}
+		
 		
 		for(int i = 0; i < 3; i++){
 			if(level.getFlameX(i) != -1)
-			g2d.drawImage(tx.getTextureRegion(5), null, level.getFlameX(i)*32, level.getFlameY(i)*32);
+			g2d.drawImage(tx.getTextureRegion(Values.FLAME_ID), null, level.getFlameX(i)*32, level.getFlameY(i)*32);
 		}
 		
+
 		if (player.getRow() >= 0 && player.getColumn() >= 0)
-			g2d.drawImage(tx.getTextureRegion(0), null, player.getColumn()*32, player.getRow()*32);
+			g2d.drawImage(tx.getTextureRegion(Values.PLAYER_ID), null, player.getColumn()*32, player.getRow()*32);
 
 	
 	}
@@ -145,21 +135,41 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 			
 		switch(item_id){
 		
-		case 5: //FLAME
+		case Values.FLAME_ID: //FLAME
 			level.addFlame(e.getX()/32, e.getY()/32);
 		break;
 		
+		case Values.KEY_ID:
+			level.setItemAtts(e.getX()/32, e.getY()/32, Values.KEY_ID);
+			System.out.printf("KEY\n");
+			System.out.print(level.getItemAtts(e.getX()/32, e.getY()/32));
+		break;
+		
+		case Values.LOCK_ID:
+			level.setItemAtts(e.getX()/32, e.getY()/32, Values.LOCK_ID);
+			System.out.printf("LOCK\n");
+			System.out.print(level.getItemAtts(e.getX()/32, e.getY()/32));
+			break;
+		
+		
 		default:
-		level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
+		level.setItem(item_id, e.getX()/32, e.getY()/32);
 		break;
 		}
 		
-		BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
+		repaint();
 		
 		}
 		
+		
+		
 		if (e.getButton() == MouseEvent.BUTTON3)
-		level.setItem(1, e.getX()/32, e.getY()/32, 0);//SOLID
+		{
+			level.setItem(Values.SOLID_ID, e.getX()/32, e.getY()/32);//SOLID
+				
+			if(item_id == Values.LOCK_ID || item_id == Values.KEY_ID)
+				level.setItemAtts(e.getX()/32, e.getY()/32, 0);
+		}
 		
 		repaint();
 	}
@@ -168,7 +178,7 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	@Override
 	public void mouseDragged(MouseEvent e) {
 
-		level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
+		level.setItem(item_id, e.getX()/32, e.getY()/32);
 
 		
 		repaint();

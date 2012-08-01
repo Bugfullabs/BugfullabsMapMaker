@@ -16,8 +16,7 @@ public class Level{
 	public PlayerEntity player;
 	public int pattern[][][];
 	public int flames[][];
-	
-	
+		
 	Level(int id, int pack, String tex, int w, int h, int px, int py){
 		
 		flames = new int[3][2];
@@ -36,7 +35,7 @@ public class Level{
 		for(int i = 0; i < w; i++){
 			for(int j = 0; j < h; j++){
 			
-			this.pattern[i][j][LEVEL] = 1;
+			this.pattern[i][j][LEVEL] = Values.SOLID_ID;
 			this.pattern[i][j][ATTS] = 0;
 				
 			}
@@ -57,6 +56,15 @@ public class Level{
 		else
 			System.out.println("Niepoprawne koordynaty");
 	}
+	
+	public void setItem(int item, int column, int row){
+		if(isCorrect(column, row)){
+			this.pattern[column][row][LEVEL] = item;
+		}
+		else
+			System.out.println("Niepoprawne koordynaty");
+	}
+	
 	
 	public void setPlayer(PlayerEntity p){
 		this.player = p;
@@ -166,10 +174,14 @@ public class Level{
 		return flames[id][1];
 	}
 	
+	
+	
 	private boolean isCorrect(int column, int row) {
 		
 		return (column >= 0 && column < this.width && row >= 0 && row < this.height);
 	}
+	
+	
 	
 	
 }

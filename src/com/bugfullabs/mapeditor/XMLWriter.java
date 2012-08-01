@@ -36,7 +36,7 @@ public class XMLWriter{
 			
 				out.writeCharacters("\n");
 			
-				for(int i = 0; i < level.getHeight()/32;i++)
+				for(int i = 0; i < level.getHeight();i++)
 				{
 					
 				out.writeStartElement("row");
@@ -44,7 +44,7 @@ public class XMLWriter{
 				
 				out.writeCharacters("\n");
 				
-					for(int j = 0; j < level.getWidth()/32; j++){
+					for(int j = 0; j < level.getWidth(); j++){
 					if (level.getItem(j, i) != 0) {
 					out.writeStartElement("item");
 					out.writeAttribute("column", Integer.toString(j));
