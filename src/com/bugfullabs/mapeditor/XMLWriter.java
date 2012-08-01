@@ -29,8 +29,8 @@ public class XMLWriter{
 			out.writeStartElement("level");
 			
 			out.writeAttribute("id", Integer.toString(level.getId()));
-			out.writeAttribute("rows", Integer.toString(level.getHeight()/32));
-			out.writeAttribute("columns", Integer.toString(level.getWidth()/32));
+			out.writeAttribute("rows", Integer.toString(level.getHeight()));
+			out.writeAttribute("columns", Integer.toString(level.getWidth()));
 			out.writeAttribute("levelpackid", Integer.toString(level.getLevelPack()));
 			out.writeAttribute("texture", level.getTexture());
 			
