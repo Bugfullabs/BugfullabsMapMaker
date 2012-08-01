@@ -77,21 +77,6 @@ public class XMLWriter{
 				
 					out.writeCharacters("\n");
 					
-				out.writeEndElement(); //</players>
-					
-				out.writeStartElement("stars");
-				
-				out.writeCharacters("\n");
-				for(int i =0 ;i < 3; i++){
-				out.writeStartElement("star");
-				out.writeAttribute("id", Integer.toString(i));
-				out.writeAttribute("column", Integer.toString(level.getFlameX(i)));
-				out.writeAttribute("row", Integer.toString(level.getFlameY(i)));
-				out.writeEndElement();//</star>
-				out.writeCharacters("\n");
-				}
-				
-				out.writeEndElement();// </stars>
 				
 			out.writeEndElement();//</level>
 			

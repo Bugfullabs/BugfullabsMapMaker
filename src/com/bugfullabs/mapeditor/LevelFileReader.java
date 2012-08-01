@@ -110,9 +110,6 @@ class LevelHandler extends DefaultHandler{
 		}
 		else if(qName.equals("player")) {
 
-			//System.out.println("Entered 'player' tag, params: " + Integer.parseInt(atts.getValue("column")) + ", " + Integer.parseInt(atts.getValue("row")) + ", " + Integer.parseInt(atts.getValue("color")) + ", " + Integer.parseInt(atts.getValue("dir")));
-			
-			//level.setPlayer(new PlayerEntity(-1, -1, 0, 1));
 			BugfullabsMapEditor.mEditor.mEditorPanel.player.setColumn(Integer.parseInt(atts.getValue("column")));
 			BugfullabsMapEditor.mEditor.mEditorPanel.player.setRow(Integer.parseInt(atts.getValue("row")));
 			BugfullabsMapEditor.mEditor.mEditorPanel.player.setColor(Integer.parseInt(atts.getValue("color")));
@@ -124,11 +121,6 @@ class LevelHandler extends DefaultHandler{
 				// TODO: delete
 				System.out.println("Entered 'item' tag, params: " + Integer.parseInt(atts.getValue("id")) + ", " + Integer.parseInt(atts.getValue("column")) + ", " + current_row);
 			}
-		}
-		else if (qName.equals("stars")) {
-		}
-		else if (qName.equals("star")) {
-			level.addFlame(Integer.parseInt(atts.getValue("column")), Integer.parseInt(atts.getValue("row")));
 		}
 		
 		}

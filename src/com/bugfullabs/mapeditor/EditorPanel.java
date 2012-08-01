@@ -65,12 +65,6 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 
 		}
 		
-		
-		for(int i = 0; i < 3; i++){
-			if(level.getFlameX(i) != -1)
-			g2d.drawImage(tx.getTextureRegion(Values.FLAME_ID), null, level.getFlameX(i)*32, level.getFlameY(i)*32);
-		}
-		
 
 		if (player.getRow() >= 0 && player.getColumn() >= 0)
 			g2d.drawImage(tx.getTextureRegion(Values.PLAYER_ID), null, player.getColumn()*32, player.getRow()*32);
@@ -136,7 +130,9 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 		switch(item_id){
 		
 		case Values.FLAME_ID: //FLAME
-			level.addFlame(e.getX()/32, e.getY()/32);
+			level.setItemAtts(e.getX()/32, e.getY()/32, Values.FLAME_ID);
+			System.out.printf("KEY\n");
+			System.out.print(level.getItemAtts(e.getX()/32, e.getY()/32));
 		break;
 		
 		case Values.KEY_ID:
@@ -165,10 +161,12 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 		
 		if (e.getButton() == MouseEvent.BUTTON3)
 		{
-			level.setItem(Values.SOLID_ID, e.getX()/32, e.getY()/32);//SOLID
 				
-			if(item_id == Values.LOCK_ID || item_id == Values.KEY_ID)
+			if(item_id == Values.LOCK_ID || item_id == Values.KEY_ID || item_id == Values.FLAME_ID)
 				level.setItemAtts(e.getX()/32, e.getY()/32, 0);
+			else
+				level.setItem(Values.SOLID_ID, e.getX()/32, e.getY()/32);//SOLID
+			
 		}
 		
 		repaint();
