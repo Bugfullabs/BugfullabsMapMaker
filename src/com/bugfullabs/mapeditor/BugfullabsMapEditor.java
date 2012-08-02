@@ -42,7 +42,7 @@ public class BugfullabsMapEditor {
 	      mFrame.add(mDesktop);
 
 	      mSelectLeveLPack = new JFileChooser();
-	      mSelectLeveLPack.setCurrentDirectory(new File("C:/Projects/Android/IceMaze/assets/gfx/game"));
+	      mSelectLeveLPack.setCurrentDirectory(new File(Values.GFX_FOLDER));
 
 		  mSelectLeveLPack.setFileFilter(new FileFilter(){
 
@@ -70,7 +70,7 @@ public class BugfullabsMapEditor {
 			}});
 
 		  mOpen = new JFileChooser();
-	      mOpen.setCurrentDirectory(new File("C:/Projects/Android/IceMaze/assets/levels"));
+	      mOpen.setCurrentDirectory(new File(Values.LEVELS_FOLDER));
 
 	      mMenu = new Menu(mFrame){
 	    	  @Override

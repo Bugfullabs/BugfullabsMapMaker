@@ -72,7 +72,7 @@ public class SaveMenu implements ActionListener {
 	    if ("save".equals(e.getActionCommand())) {
 	    	saveButton.setEnabled(false);
 	        mSave.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	        mSave.setCurrentDirectory(new File("C:/Projects/Android/IceMaze/assets/levels"));
+	        mSave.setCurrentDirectory(new File(Values.LEVELS_FOLDER));
 			mSave.setDialogTitle("Wybierz folder zapisu");
 			int returnVal = mSave.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {

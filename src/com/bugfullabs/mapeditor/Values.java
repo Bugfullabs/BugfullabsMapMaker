@@ -14,6 +14,8 @@ public interface Values {
 	public static final int LOCK_ID = 8;
 	public static final int KEY_ID = 9;
 	public static final int TELEPORT_ID = 10;
+	public static final String GFX_FOLDER = "C:/Projects/Android/IceMaze/assets/gfx/game";
+	public static final String LEVELS_FOLDER = "C:/Projects/Android/IceMaze/assets/levels";
 	
 	
 }
