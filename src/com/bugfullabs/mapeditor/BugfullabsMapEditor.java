@@ -98,6 +98,7 @@ public class BugfullabsMapEditor {
 	    					  new SaveMenu(mFrame, true);
 	    				  }
 	    				  else if (a == 1) {
+		    				  mEditor.clear();
 	    					  openBrandNewEditor();
 	    				  }
 	    			  }
@@ -110,6 +111,7 @@ public class BugfullabsMapEditor {
 		    			  int returnValLP = mSelectLeveLPack.showOpenDialog(null);
 		    			  if (returnValOpen == JFileChooser.APPROVE_OPTION && returnValLP == JFileChooser.APPROVE_OPTION) {
 		    				  clear();
+		    				  mEditor.clear();
 		    				  mEditor = new Editor(mDesktop, mSelectLeveLPack.getSelectedFile());
 		    				  mLevelFileReader = new LevelFileReader(mOpen.getSelectedFile());
 		    				  mEditor.mEditorPanel.setLevel(mLevelFileReader.getLevel());

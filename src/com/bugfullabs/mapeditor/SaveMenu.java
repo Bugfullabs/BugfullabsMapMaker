@@ -44,7 +44,7 @@ public class SaveMenu implements ActionListener {
 		saveMenu.setTitle("Settings");
 		saveMenu.setVisible(true);
 
-		SpinnerModel modelLPI = new SpinnerNumberModel(BugfullabsMapEditor.mEditor.mEditorPanel.level.getLevelPack(), 1, 99, 1);
+		SpinnerModel modelLPI = new SpinnerNumberModel(BugfullabsMapEditor.mEditor.mEditorPanel.level.getLevelPack(), 0, 99, 1);
 	    spinLevelPackId = addLabeledSpinner(mSpinnerLPIPanel, "Level Pack id:", modelLPI);
 	    spinLevelPackId.setAlignmentX(Component.LEFT_ALIGNMENT);
 	    spinLevelPackId.setValue(BugfullabsMapEditor.mEditor.mEditorPanel.level.getLevelPack());

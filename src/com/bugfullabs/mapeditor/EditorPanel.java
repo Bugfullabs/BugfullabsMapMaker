@@ -24,6 +24,21 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 	private static int item_id;
 	public PlayerEntity player;
 	
+	public static int EMPTY = 0;
+	public static int SOLID = 1;
+	public static int FINISH = 2;
+	public static int ARROW = 3;
+	public static int LET_PASS = 4;
+	public static int LET_PASS_ONE_DIR = 5;
+	public static int STAR = 6;
+
+	public static int DIR_SWITCH = 9;
+	public static int DIR_SWITCH_TURN = 10;
+	
+	public static int LOCK_LOCKED = 7;
+	public static int LOCK_KEY = 8;
+	public static int LOCK_UNLOCKED = 18;
+
 	public Level level;
 	
 	EditorPanel(String name, TexturePack texture, int x, int y, int width, int height){
@@ -64,14 +79,20 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 
 //				System.out.print("(" + k + "," + j + ") ");
 
-				if (level.getItem(k, j) != 0 && level.getItem(k, j) != 2 && level.getItem(k, j) != 7 && level.getItem(k, j) != 8) {
+				if (level.getItem(k, j) != EMPTY && level.getItem(k, j) != FINISH && level.getItem(k, j) != ARROW && level.getItem(k, j) != DIR_SWITCH && level.getItem(k, j) != DIR_SWITCH_TURN && level.getItem(k, j) != LET_PASS && level.getItem(k, j) != LET_PASS_ONE_DIR && level.getItem(k, j) != LOCK_LOCKED) {
 					g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), null, k*32, j*32);
 				}
-				else if (level.getItem(k, j) == 2 || level.getItem(k, j) == 7 || level.getItem(k, j) == 8) {
+				else if (level.getItem(k, j) == FINISH || level.getItem(k, j) == ARROW || level.getItem(k, j) == DIR_SWITCH || level.getItem(k, j) == DIR_SWITCH_TURN || level.getItem(k, j) == LET_PASS || level.getItem(k, j) == LET_PASS_ONE_DIR) {
 					AffineTransform xform = new AffineTransform();
 					xform.translate(k*32, j*32);
 					xform.rotate(level.getItemAtts(k, j)*(Math.PI/2), tx.getTextureRegion(level.getItem(k, j)).getWidth()/2, tx.getTextureRegion(level.getItem(k, j)).getHeight()/2);
 					g2d.drawImage(tx.getTextureRegion(level.getItem(k, j)), xform, null);
+				}
+				else if (level.getItem(k, j) == LOCK_LOCKED) {
+					if (level.getItemAtts(k, j) == 0)
+						g2d.drawImage(tx.getTextureRegion(LOCK_LOCKED), null, k*32, j*32);
+					else
+						g2d.drawImage(tx.getTextureRegion(LOCK_UNLOCKED), null, k*32, j*32);
 				}
 				
 				k++;
@@ -149,13 +170,20 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 		if (level == null) {
 			System.out.println("LEVEL NULL!");
 		}
+		
+		if (e.getButton() == MouseEvent.BUTTON1 && !(level.getItem(e.getX()/32, e.getY()/32) == FINISH && ItemsPanel.finishSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == ARROW && ItemsPanel.arrowSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == DIR_SWITCH && ItemsPanel.dirSwitchSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == DIR_SWITCH_TURN && ItemsPanel.dirSwitchTurnSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == LET_PASS && ItemsPanel.letPassSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == LET_PASS_ONE_DIR && ItemsPanel.letPassOneDirSelected()) && !(item_id == LOCK_LOCKED) && !(level.getItem(e.getX()/32, e.getY()/32) == LOCK_LOCKED && ItemsPanel.lockLockedSelected()))
+			level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
+		else if (e.getButton() == MouseEvent.BUTTON3)
+			level.setItem(EMPTY, e.getX()/32, e.getY()/32, 0);
+		else if (item_id == LOCK_LOCKED && !(level.getItem(e.getX()/32, e.getY()/32) == LOCK_LOCKED && ItemsPanel.lockLockedSelected()))
+			level.setItem(item_id, e.getX()/32, e.getY()/32, 1);
 
-		if (level.getItem(e.getX()/32, e.getY()/32) == 0 && ItemsPanel.playerSelected() && e.getButton() == MouseEvent.BUTTON1) {
+		if (level.getItem(e.getX()/32, e.getY()/32) == EMPTY && ItemsPanel.playerSelected() && e.getButton() == MouseEvent.BUTTON1) {
 			player.setColumn(e.getX()/32);
 			player.setRow(e.getY()/32);
-			level.setItem(0, e.getX()/32, e.getY()/32, 0);
+			level.setItem(EMPTY, e.getX()/32, e.getY()/32, 0);
 		}
-		else if (((level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == 7 && ItemsPanel.letPassSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == 8 && ItemsPanel.letPassOneDirSelected())) && e.getButton() == MouseEvent.BUTTON1) {
+		else if (((level.getItem(e.getX()/32, e.getY()/32) == FINISH && ItemsPanel.finishSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == ARROW && ItemsPanel.arrowSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == DIR_SWITCH && ItemsPanel.dirSwitchSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == DIR_SWITCH_TURN && ItemsPanel.dirSwitchTurnSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == LET_PASS && ItemsPanel.letPassSelected()) || (level.getItem(e.getX()/32, e.getY()/32) == LET_PASS_ONE_DIR && ItemsPanel.letPassOneDirSelected())) && e.getButton() == MouseEvent.BUTTON1) {
 			if (level.getItemAtts(e.getX()/32, e.getY()/32) < 3) {
 				System.out.println(level.getItemAtts(e.getX()/32, e.getY()/32));
 				level.setItemAtts(e.getX()/32, e.getY()/32, level.getItemAtts(e.getX()/32, e.getY()/32) + 1);
@@ -165,12 +193,16 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 				level.setItemAtts(e.getX()/32, e.getY()/32, 0);
 			BugfullabsMapEditor.mEditor.mEditorPanel.repaintIt();
 		}
+		else if (level.getItem(e.getX()/32, e.getY()/32) == LOCK_LOCKED && ItemsPanel.lockLockedSelected() && e.getButton() == MouseEvent.BUTTON1) {
+			if (level.getItemAtts(e.getX()/32, e.getY()/32) == 0) {
+				level.setItemAtts(e.getX()/32, e.getY()/32, 1);
+			}
+			else {
+				level.setItemAtts(e.getX()/32, e.getY()/32, 0);
+			}
+		}
 		
-		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id + ", item atts: " + level.getItemAtts(e.getX()/32, e.getY()/32));
-		if (e.getButton() == MouseEvent.BUTTON1 && !(level.getItem(e.getX()/32, e.getY()/32) == 2 && ItemsPanel.finishSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == 7 && ItemsPanel.letPassSelected()) && !(level.getItem(e.getX()/32, e.getY()/32) == 8 && ItemsPanel.letPassOneDirSelected()))
-			level.setItem(item_id, e.getX()/32, e.getY()/32, 0);
-		else if (e.getButton() == MouseEvent.BUTTON3)
-			level.setItem(0, e.getX()/32, e.getY()/32, 0);
+		System.out.println("position_editor: " + e.getX() + ", " + e.getY() + ", item id: " + item_id + ", item atts: " + level.getItemAtts(e.getX()/32, e.getY()/32) + " " + (ItemsPanel.dirSwitchSelected() ? "true" : "false"));
 		repaint();
 		
 	}
@@ -182,6 +214,7 @@ public class EditorPanel extends JPanel implements MouseListener, MouseMotionLis
 
 	public void setLevel(Level l) {
 		this.level = l;
+		this.level.pattern = l.pattern;
 		this.level.setPlayer(l.player);
 		System.out.println("Level id: " + this.level.getId() + ", LevelPackId: " + this.level.getLevelPack());
 	}
